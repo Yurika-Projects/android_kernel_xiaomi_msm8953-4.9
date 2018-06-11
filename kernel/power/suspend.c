@@ -37,6 +37,9 @@
 const char *pm_labels[] = { "mem", "standby", "freeze", NULL };
 const char *pm_states[PM_SUSPEND_MAX];
 
+suspend_state_t mem_sleep_current = PM_SUSPEND_FREEZE;
+static suspend_state_t mem_sleep_default = PM_SUSPEND_MEM;
+
 unsigned int pm_suspend_global_flags;
 EXPORT_SYMBOL_GPL(pm_suspend_global_flags);
 
