@@ -42,7 +42,8 @@
 #define MAX_NAME_SIZE	64
 
 #define DSI_CLOCK_BITRATE_RADIX 10
-
+int backlight_min = 0;
+module_param(backlight_min, int, 0644);
 static DEFINE_MUTEX(dsi_display_list_lock);
 static LIST_HEAD(dsi_display_list);
 static char dsi_display_primary[MAX_CMDLINE_PARAM_LEN];
