@@ -1,0 +1,3 @@
+[submodule "scripts/dtc-aosp/dtc"]
+	path = scripts/dtc-aosp/dtc
+	url = https://aosp.tuna.tsinghua.edu.cn/platform/external/dtc
