@@ -578,7 +578,7 @@ static void __mdss_fb_idle_notify_work(struct work_struct *work)
 	pr_debug("Idle timeout %dms expired!\n", mfd->idle_time);
 	mfd->idle_state = MDSS_FB_IDLE;
 
-    /*
+	/*
 	 * idle_notify node events are used to reduce MDP load when idle,
 	 * this is not needed for command mode panels.
 	 */
@@ -1218,7 +1218,7 @@ static struct attribute *mdss_fb_attrs[] = {
 	&dev_attr_show_blank_event.attr,
 	&dev_attr_idle_time.attr,
 	&dev_attr_idle_notify.attr,
-    &dev_attr_idle_state.attr,
+	&dev_attr_idle_state.attr,
 	&dev_attr_msm_fb_panel_info.attr,
 	&dev_attr_msm_fb_src_split_info.attr,
 	&dev_attr_msm_fb_thermal_level.attr,
@@ -3544,6 +3544,7 @@ static int __mdss_fb_sync_buf_done_callback(struct notifier_block *p,
 					msecs_to_jiffies(mfd->idle_time)))
 				pr_debug("fb%d: restarted idle work\n",
 						mfd->index);
+			mfd->idle_state = MDSS_FB_IDLE_TIMER_RUNNING;
 		} else {
 			mfd->idle_state = MDSS_FB_IDLE;
 		}
