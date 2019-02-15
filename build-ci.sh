@@ -70,7 +70,8 @@ tg_channelcast "<b>Nito Kernel</b> new build!" \
 		"Started on <b>$(hostname)</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
 		"Started on <b>$(date)</b>" \
-		"—— Send from <b>Nito CI Bot</b>"
+		"受け取る準備をしてください!"
+		"—— <b>Nito CI Bot</b>"
 
 export ARCH=arm64
 export SUBARCH=arm64
@@ -97,14 +98,14 @@ if ! [ -a out/arch/arm64/boot/Image.gz ]; then
 	exit 1
 fi
 
-cd nito-ak2/
-mkdir kernel
-mkdir kernel/treble
-cp $IMG kernel/
-cp $DTB kernel/treble
+mkdir nito-ak2/kernel
+mkdir nito-ak2/kernel/treble
+cp $IMG nito-ak2/kernel/
+cp $DTB nito-ak2/kernel/treble
+cd nito-ak2
 zip "Nito-Kernel-CI.zip" .
 push
-cd ..
+cd ../
 
 fin
 echo "Build done!"
