@@ -70,7 +70,7 @@ tg_channelcast "<b>Nito Kernel</b> new build!" \
 		"Started on <b>$(hostname)</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
 		"Started on <b>$(date)</b>" \
-		"受け取る準備をしてください!"
+		"受け取る準備をしてください!キャプテン!" \
 		"—— <b>Nito CI Bot</b>"
 
 export ARCH=arm64
