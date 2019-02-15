@@ -1,3 +1,3 @@
 language: c
-install: sudo apt install -y ccache bc bash git-core gnupg build-essential zip curl make automake autogen autoconf autotools-dev libtool shtool python m4 gcc libtool zlib1g-dev
+install: sudo apt install -y ccache bc bash git gnupg build-essential zip curl make automake autotools-dev libtool python m4 gcc libtool zlib1g-dev
 script: build-ci.sh
