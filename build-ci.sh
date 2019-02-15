@@ -44,7 +44,7 @@ function tg_sendinfo() {
 
 # Errored prober
 function finerr() {
-	tg_sendinfo "$(echo -e "Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds\nbut it's error...")"
+	tg_sendinfo "$(echo -e "Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds\nBuild Error.\n Go to check your Travis CI!")"
 	exit 1
 }
 
@@ -67,11 +67,11 @@ function fin() {
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel</b> new build!" \
-		"Started on <code>$(hostname)</code>" \
-		"For device </b>Redmi 5 Plus</b>" \
-		"At branch <code>9.0-caf-upstream</code>" \
-		"Under commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>" \
-		"Started on <code>$(date)</code>"
+		"Started on <b>$(hostname)</b>" \
+		"For </b>Redmi 5 Plus</b>" \
+		"At branch <b>9.0-caf-upstream</b>" \
+		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
+		"Started on <b>$(date)</b>"
 
 export ARCH=arm64
 export SUBARCH=arm64
@@ -86,6 +86,12 @@ git clone https://github.com/nibaji/DragonTC-9.0 --depth=1 Clang
 
 make O=out vince-perf_defconfig -j96
 make O=out -j96
+
+if ! [ -a out/arch/arm64/boot/Image.gz ]; then
+	echo -e "Kernel compilation failed, See buildlog to fix errors"
+	finerr
+	exit 1
+fi
 
 mkdir nito-ak2/kernel
 mkdir nito-ak2/kernel/treble
