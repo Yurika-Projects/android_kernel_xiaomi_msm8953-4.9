@@ -103,7 +103,7 @@ mkdir nito-ak2/kernel/treble
 cp $IMG nito-ak2/kernel/
 cp $DTB nito-ak2/kernel/treble
 cd nito-ak2
-zip "Nito-Kernel-CI.zip" .
+zip "Nito-Kernel-CI.zip" *
 push
 cd ../
 
