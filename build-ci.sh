@@ -19,7 +19,7 @@ export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push() {
-	JIP="Nito Kernel CI.zip"
+	JIP="Nito-Kernel-CI.zip"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 			-F chat_id="$TELEGRAM_ID"
 }
@@ -67,11 +67,9 @@ function fin() {
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel</b> new build!" \
-		"Started on <b>$(hostname)</b>" \
-		"For </b>Redmi 5 Plus</b>" \
-		"At branch <b>9.0-caf-upstream</b>" \
-		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
-		"Started on <b>$(date)</b>"
+		"Started on <code>$(hostname)</code>" \
+		"Under commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>" \
+		"Started on <code>$(date)</code>"
 
 export ARCH=arm64
 export SUBARCH=arm64
@@ -80,6 +78,8 @@ export CLANG_TREPLE=aarch64-linux-gnu-
 export CROSS_COMPILE=$PWD/Toolchain/bin/aarch64-linux-android-
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
+export BUILD_END=$(date +"%s")
+export DIFF=$(($BUILD_END - $BUILD_START))
 
 git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 Toolchain --depth=1
 git clone https://github.com/nibaji/DragonTC-9.0 --depth=1 Clang
@@ -98,7 +98,7 @@ mkdir nito-ak2/kernel/treble
 cp out/arch/arm64/boot/Image.gz nito-ak2/kernel/
 cp out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb nito-ak2/kernel/treble/
 cd nito-ak2/
-zip "Nito Kernel CI.zip" *
+zip "Nito-Kernel-CI.zip" *
 push
 cd ..
 
