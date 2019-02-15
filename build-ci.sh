@@ -17,6 +17,4 @@ cp out/arch/arm64/boot/Image.gz nito-ak2/kernel
 cp out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb nito-ak2/kernel/treble
 zip "Nito Kernel CI.zip" nito-ak2/
 
-done
-
-
+echo "Build done!"
