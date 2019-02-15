@@ -128,9 +128,12 @@ make_zip()
 {
   make clean &>/dev/null
   cp $LOG_DIR/Changelog.txt $ZIP_DIR/Changelog.txt
-  cp $KERN_IMG $ZIP_DIR/Image.gz
-  cp $DTB $ZIP_DTR/kernel/treble
-  zip $ZIP_DIR "Nito Kernel CI.zip"
+  mkdir $ZIP_DIR/kernel
+  mkdir $ZIP_DIR/kernel/treble
+  cp $KERN_IMG $ZIP_DIR/kernel
+  cp $DTB $ZIP_DIR/kernel/treble
+  cd $ZIP_DIR
+  zip "Nito Kernel CI.zip" *
   echo -e "$purple(i) Flashable zip generated under $ZIP_DIR.$nc"
 }
 
@@ -138,9 +141,12 @@ make_zip_test()
 {
   make clean &>/dev/null
   cp $LOG_DIR/Changelog.txt $ZIP_DIR/Changelog.txt
-  cp $KERN_IMG $ZIP_DIR/Image.gz
-  cp $DTB $ZIP_DTR/kernel/treble
-  zip $ZIP_DIR "Nito Kernel CI.zip"
+  mkdir $ZIP_DIR/kernel
+  mkdir $ZIP_DIR/kernel/treble
+  cp $KERN_IMG $ZIP_DIR/kernel
+  cp $DTB $ZIP_DIR/kernel/treble
+  cd $ZIP_DIR
+  zip "Nito Kernel CI.zip" *
   echo -e "$purple(i) Flashable zip (TEST) generated under $ZIP_DIR.$nc"
 }
 

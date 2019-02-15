@@ -13,6 +13,8 @@ git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_a
 make O=out vince-perf_defconfig -j96
 make O=out -j96
 
+mkdir nito-ak2/kernel
+mkdir nito-ak2/kernel/treble
 cp out/arch/arm64/boot/Image.gz nito-ak2/kernel/
 cp out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb nito-ak2/kernel/treble/
 cd nito-ak2/
