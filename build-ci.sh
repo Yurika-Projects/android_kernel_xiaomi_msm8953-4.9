@@ -4,11 +4,11 @@
 
 export ARCH=arm64
 export SUBARCH=arm64
-export CROSS_COMPILE=$PWD/Toolchain/bin/aarch64-linux-gnu-
+export CROSS_COMPILE=$PWD/Toolchain/bin/aarch64-linux-android-
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
 
-git clone https://github.com/SomeFeaKOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-gnueabi-9.0 Toolchain --depth=1
+git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 Toolchain --depth=1
 
 make O=out vince-perf_defconfig -j$(grep -c ^processor /proc/cpuinfo)
 make O=out -j$(grep -c ^processor /proc/cpuinfo)
