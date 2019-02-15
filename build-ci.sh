@@ -44,7 +44,7 @@ function tg_sendinfo() {
 
 # Errored prober
 function finerr() {
-	tg_sendinfo "$(echo -e "Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds\nBuild Error.\n Go to check your Travis CI!")"
+	tg_sendinfo "$(echo -e "Build fail, use $(($DIFF / 60)) min $(($DIFF % 60)) sec.")"
 	exit 1
 }
 
@@ -57,7 +57,7 @@ function tg_sendstick() {
 
 # Fin prober
 function fin() {
-	tg_sendinfo "$(echo "Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.")"
+	tg_sendinfo "$(echo "Build done, use $(($DIFF / 60)) min $(($DIFF % 60)) sec.")"
 }
 
 #
@@ -67,9 +67,10 @@ function fin() {
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel</b> new build!" \
-		"Started on <code>$(hostname)</code>" \
-		"Under commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>" \
-		"Started on <code>$(date)</code>"
+		"Started on <b>$(hostname)</b>" \
+		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
+		"Started on <b>$(date)</b>" \
+		"—— Send from <b>Nito CI Bot</b>"
 
 export ARCH=arm64
 export SUBARCH=arm64
@@ -81,11 +82,14 @@ export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
 export BUILD_END=$(date +"%s")
 export DIFF=$(($BUILD_END - $BUILD_START))
 
+export IMG=$PWD/out/arch/arm64/boot/Image.gz
+export DTB=$PWD/out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb
+
 git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 Toolchain --depth=1
 git clone https://github.com/nibaji/DragonTC-9.0 --depth=1 Clang
 
-make O=out vince-perf_defconfig -j96
-make O=out -j96
+make O=out vince-perf_defconfig -j$(grep -c '^processor' /proc/cpuinfo)
+make O=out -j$(grep -c '^processor' /proc/cpuinfo)
 
 if ! [ -a out/arch/arm64/boot/Image.gz ]; then
 	echo -e "Kernel compilation failed, See buildlog to fix errors"
@@ -93,12 +97,12 @@ if ! [ -a out/arch/arm64/boot/Image.gz ]; then
 	exit 1
 fi
 
-mkdir nito-ak2/kernel
-mkdir nito-ak2/kernel/treble
-cp out/arch/arm64/boot/Image.gz nito-ak2/kernel/
-cp out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb nito-ak2/kernel/treble/
 cd nito-ak2/
-zip "Nito-Kernel-CI.zip" *
+mkdir kernel
+mkdir kernel/treble
+cp $IMG kernel/
+cp $DTB kernel/treble
+zip "Nito-Kernel-CI.zip" .
 push
 cd ..
 
