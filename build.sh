@@ -62,11 +62,11 @@ export CROSS_COMPILE=$TOOL_DIR/aarch64-linux-android-4.9/bin/aarch64-linux-andro
 export ARCH=arm64
 export SUBARCH=arm64
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
-export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
+export KBUILD_BUILD_HOST="-buildaesthesia-"
 
 #Misc
 CONFIG=vince-perf_defconfig
-THREAD="$(grep -c ^processor /proc/cpuinfo)"
+THREAD="-j$(grep -c ^processor /proc/cpuinfo)"
 
 #begin functions
 makekornel()
@@ -126,25 +126,21 @@ clean_sauce()
 
 make_zip()
 {
-  cd $ZIP_DIR
   make clean &>/dev/null
   cp $LOG_DIR/Changelog.txt $ZIP_DIR/Changelog.txt
   cp $KERN_IMG $ZIP_DIR/Image.gz
   cp $DTB $ZIP_DTR/kernel/treble
-  make &>/dev/null
-  cd $KERNEL_DIR
+  zip $ZIP_DIR "Nito Kernel CI.zip"
   echo -e "$purple(i) Flashable zip generated under $ZIP_DIR.$nc"
 }
 
 make_zip_test()
 {
-  cd $ZIP_DIR
   make clean &>/dev/null
   cp $LOG_DIR/Changelog.txt $ZIP_DIR/Changelog.txt
   cp $KERN_IMG $ZIP_DIR/Image.gz
   cp $DTB $ZIP_DTR/kernel/treble
-  make test &>/dev/null
-  cd $KERNEL_DIR
+  zip $ZIP_DIR "Nito Kernel CI.zip"
   echo -e "$purple(i) Flashable zip (TEST) generated under $ZIP_DIR.$nc"
 }
 
