@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=Nito Kernel
+kernel.string=Nito Kernel CI
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
@@ -25,8 +25,6 @@ is_slot_device=0;
 
 ## AnyKernel file attributes
 # set permissions/ownership for included ramdisk files
-#chmod -R 750 $ramdisk/*;
-#chown -R root:root $ramdisk/*;
 
 
 ## AnyKernel install
@@ -34,24 +32,6 @@ dump_boot;
 
 # begin ramdisk changes
 
-# inject init
-
-
-# sepolicy
-$bin/magiskpolicy --load sepolicy --save sepolicy \
-    "allow init rootfs file execute_no_trans" \
-    "allow { init modprobe } rootfs system module_load" \
-    "allow init { system_file vendor_file vendor_configs_file } file mounton" \
-    "allow { msm_irqbalanced hal_perf_default } rootfs file { getattr read open } " \
-    ;
-
-# sepolicy_debug
-$bin/magiskpolicy --load sepolicy_debug --save sepolicy_debug \
-    "allow init rootfs file execute_no_trans" \
-    "allow { init modprobe } rootfs system module_load" \
-    "allow init { system_file vendor_file vendor_configs_file } file mounton" \
-    "allow { msm_irqbalanced hal_perf_default } rootfs file { getattr read open } " \
-    ;
 
 # end ramdisk changes
 

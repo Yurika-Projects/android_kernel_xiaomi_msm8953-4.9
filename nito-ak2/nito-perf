@@ -10,8 +10,8 @@ export INTERNAL_STORGE=/sys/block/mmcblk0
 export EXTERNAL_STORGE=/sys/block/mmcblk1
 
 # CPU
-echo 453120 >> /sys/bus/cpu/devices/cpu0/cpufreq/scaling_min_freq
-echo schedalucard >> /sys/bus/cpu/devices/cpu0/cpufreq/scaling_governor
+# echo 453120 >> /sys/bus/cpu/devices/cpu0/cpufreq/scaling_min_freq
+# echo schedalucard >> /sys/bus/cpu/devices/cpu0/cpufreq/scaling_governor
 
 # GPU
 
@@ -26,6 +26,6 @@ echo 50 >> $EXTERNAL_STORGE/queue/iosched/sync_expire
 
 # Function Enable
 echo 1 >> /sys/kernel/fp_boost/enable
-echo 1 >> /sys/kernel/dyn_fsync/Dyn_fsync_active
+# echo 1 >> /sys/kernel/dyn_fsync/Dyn_fsync_active
 
 # Done

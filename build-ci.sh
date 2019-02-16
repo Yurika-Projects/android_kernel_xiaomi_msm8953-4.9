@@ -44,7 +44,7 @@ function tg_sendinfo() {
 
 # Errored prober
 function finerr() {
-	tg_sendinfo "$(echo -e "Build fail, use $(($DIFF / 60)) min $(($DIFF % 60)) sec.")"
+	tg_sendinfo "$(echo -e "<b>Build fail...</b>\nUse <b>$(($DIFF / 60)) min $(($DIFF % 60)) sec.</b>")"
 	exit 1
 }
 
@@ -57,7 +57,7 @@ function tg_sendstick() {
 
 # Fin prober
 function fin() {
-	tg_sendinfo "$(echo "Build done, use $(($DIFF / 60)) min $(($DIFF % 60)) sec.")"
+	tg_sendinfo "$(echo "<b>Build done!</b>\nUse <b>$(($DIFF / 60)) min $(($DIFF % 60)) sec</b>.")"
 }
 
 #
@@ -80,11 +80,15 @@ export CLANG_TREPLE=aarch64-linux-gnu-
 export CROSS_COMPILE=$PWD/Toolchain/bin/aarch64-linux-android-
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
+
+export DATE=`date`
+export BUILD_START=$(date +"%s")
 export BUILD_END=$(date +"%s")
 export DIFF=$(($BUILD_END - $BUILD_START))
+export BUILD_TIME=$(date +"%Y%m%d-%T")
 
-export IMG=$PWD/out/arch/arm64/boot/Image.gz
-export DTB=$PWD/out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb
+# export IMG=$PWD/out/arch/arm64/boot/Image.gz
+# export DTB=$PWD/out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb
 
 git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 Toolchain --depth=1
 git clone https://github.com/nibaji/DragonTC-9.0 --depth=1 Clang
@@ -92,20 +96,18 @@ git clone https://github.com/nibaji/DragonTC-9.0 --depth=1 Clang
 make O=out vince-perf_defconfig -j$(grep -c '^processor' /proc/cpuinfo)
 make O=out -j$(grep -c '^processor' /proc/cpuinfo)
 
-if ! [ -a out/arch/arm64/boot/Image.gz ]; then
+if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	echo -e "Kernel compilation failed, See buildlog to fix errors"
 	finerr
 	exit 1
 fi
 
-mkdir nito-ak2/kernel
-mkdir nito-ak2/kernel/treble
-cp $IMG nito-ak2/kernel/
-cp $DTB nito-ak2/kernel/treble
 cd nito-ak2
+cp  ../out/arch/arn64/boot/Image.gz-dtb .
 zip "Nito-Kernel-CI.zip" *
+echo "Flashable zip generated under $ZIP_DIR."
 push
-cd ../
-
+cd ..
 fin
+
 echo "Build done!"
