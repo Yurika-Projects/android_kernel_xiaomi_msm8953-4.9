@@ -44,7 +44,10 @@ function tg_sendinfo() {
 
 # Errored prober
 function finerr() {
-	tg_channelcast "<b>Build fail...</b>\nUse <b>$(($DIFF / 60)) min $(($DIFF % 60)) sec</b>."
+	tg_channelcast "<b>Build fail...</b>" \
+	"Use $(($DIFF / 60)) min $(($DIFF % 60)) sec." \
+	"Check build log to fix compile error!" \
+	"—— <b>Nito CI Bot</b>"
 	exit 1
 }
 
@@ -57,12 +60,17 @@ function tg_sendstick() {
 
 # Fin prober
 function fin() {
-	tg_channelcast "<b>Build done!</b>\nUse <b>$(($DIFF / 60)) min $(($DIFF % 60)) sec</b>."
+	tg_channelcast "<b>Build done!</b>" \
+	"Use $(($DIFF / 60)) min $(($DIFF % 60)) sec!" \
+	"—— <b>Nito CI Bot</b>"
 }
 
 #
 # Telegram FUNCTION end
 #
+
+export DATE=`date`
+export BUILD_START=$(date +"%s")
 
 tg_sendstick
 
@@ -81,12 +89,7 @@ export CROSS_COMPILE=$PWD/Toolchain/bin/aarch64-linux-android-
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
 
-export DATE=`date`
-export BUILD_START=$(date +"%s")
-export BUILD_END=$(date +"%s")
-export DIFF=$(($BUILD_END - $BUILD_START))
-export BUILD_TIME=$(date +"%Y%m%d-%T")
-
+# export BUILD_TIME=$(date +"%Y%m%d-%T")
 # export IMG=$PWD/out/arch/arm64/boot/Image.gz
 # export DTB=$PWD/out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb
 
@@ -102,10 +105,14 @@ if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	exit 1
 fi
 
-cp out/arch/arn64/boot/Image.gz-dtb nito-ak2/
+cp out/arch/arm64/boot/Image.gz-dtb nito-ak2/
 cd nito-ak2/
 zip "Nito-Kernel-CI.zip" *
 echo "Flashable zip generated."
+
+export BUILD_END=$(date +"%s")
+export DIFF=$(($BUILD_END - $BUILD_START))
+
 push
 cd ..
 fin
