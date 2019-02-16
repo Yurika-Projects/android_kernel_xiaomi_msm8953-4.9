@@ -1,5 +1,6 @@
 language: c
-dist: xenial
+git:
+ depth: 1
 script: 
  - chmod +x build-ci.sh
  - ./build-ci.sh
