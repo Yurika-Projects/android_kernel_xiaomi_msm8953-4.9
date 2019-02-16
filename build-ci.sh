@@ -90,7 +90,7 @@ export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
 
 # export BUILD_TIME=$(date +"%Y%m%d-%T")
-# export IMG=$PWD/out/arch/arm64/boot/Image.gz
+export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 # export DTB=$PWD/out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb
 
 git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 Toolchain --depth=1
@@ -108,9 +108,9 @@ if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	exit 1
 fi
 
-cp out/arch/arm64/boot/Image.gz-dtb nito-ak2/
+cp $IMG nito-ak2/
 cd nito-ak2/
-zip -r6 "Nito-Kernel-CI.zip" *
+zip -r9 "Nito-Kernel-CI.zip" *
 echo "Flashable zip generated."
 
 export BUILD_END=$(date +"%s")
