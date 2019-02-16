@@ -19,7 +19,7 @@ export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push() {
-	JIP="Nito-Kernel-CI-*.zip"
+	JIP="Nito-Kernel-CI.zip"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 			-F chat_id="$TELEGRAM_ID"
 }
@@ -44,7 +44,7 @@ function tg_sendinfo() {
 
 # Errored prober
 function finerr() {
-	tg_sendinfo "$(echo -e "<b>Build fail...</b>\nUse <b>$(($DIFF / 60)) min $(($DIFF % 60)) sec.</b>")"
+	tg_channelcast "<b>Build fail...</b>\nUse <b>$(($DIFF / 60)) min $(($DIFF % 60)) sec</b>."
 	exit 1
 }
 
@@ -57,7 +57,7 @@ function tg_sendstick() {
 
 # Fin prober
 function fin() {
-	tg_sendinfo "$(echo "<b>Build done!</b>\nUse <b>$(($DIFF / 60)) min $(($DIFF % 60)) sec</b>.")"
+	tg_channelcast "<b>Build done!</b>\nUse <b>$(($DIFF / 60)) min $(($DIFF % 60)) sec</b>."
 }
 
 #
@@ -102,10 +102,10 @@ if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	exit 1
 fi
 
-cd nito-ak2
-cp  ../out/arch/arn64/boot/Image.gz-dtb .
-zip "Nito-Kernel-CI-$BUILD_DATE.zip" *
-echo "Flashable zip generated under $ZIP_DIR."
+cp out/arch/arn64/boot/Image.gz-dtb nito-ak2/
+cd nito-ak2/
+zip "Nito-Kernel-CI.zip" *
+echo "Flashable zip generated."
 push
 cd ..
 fin
