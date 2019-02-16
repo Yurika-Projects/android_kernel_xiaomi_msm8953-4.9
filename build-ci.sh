@@ -19,7 +19,7 @@ export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push() {
-	JIP="Nito-Kernel-CI.zip"
+	JIP="Nito-Kernel-CI-*.zip"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 			-F chat_id="$TELEGRAM_ID"
 }
@@ -104,7 +104,7 @@ fi
 
 cd nito-ak2
 cp  ../out/arch/arn64/boot/Image.gz-dtb .
-zip "Nito-Kernel-CI.zip" *
+zip "Nito-Kernel-CI-$BUILD_DATE.zip" *
 echo "Flashable zip generated under $ZIP_DIR."
 push
 cd ..
