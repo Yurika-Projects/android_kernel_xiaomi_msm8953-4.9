@@ -107,7 +107,7 @@ fi
 
 cp out/arch/arm64/boot/Image.gz-dtb nito-ak2/
 cd nito-ak2/
-zip "Nito-Kernel-CI.zip" *
+zip -r6 "Nito-Kernel-CI.zip" *
 echo "Flashable zip generated."
 
 export BUILD_END=$(date +"%s")
