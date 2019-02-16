@@ -96,6 +96,9 @@ export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
 git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 Toolchain --depth=1
 git clone https://github.com/nibaji/DragonTC-9.0 --depth=1 Clang
 
+git submodule init
+git submodule update
+
 make O=out vince-perf_defconfig -j$(grep -c '^processor' /proc/cpuinfo)
 make O=out -j$(grep -c '^processor' /proc/cpuinfo)
 
@@ -118,3 +121,4 @@ cd ..
 fin
 
 echo "Build done!"
+
