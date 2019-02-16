@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Nito CI Script
 # Copyright (C) 2019 urK -kernelaesthesia- (Z5X67280@163.com)
 # Copyright (C) 2019 Raphiel Rollerscaperers (raphielscape)
