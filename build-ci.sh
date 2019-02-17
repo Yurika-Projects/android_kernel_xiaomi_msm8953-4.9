@@ -95,7 +95,7 @@ export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 # export DTB=$PWD/out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb
 
-git clone https://github.com/SomeFeaKOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-gnueabi-9.0 Toolchain --depth=1
+git clone https://github.com/dinosnore1/aarch64-linux-gnu-8.2.1 Toolchain --depth=1
 git clone https://github.com/nibaji/DragonTC-9.0 --depth=1 Clang
 
 git submodule init
