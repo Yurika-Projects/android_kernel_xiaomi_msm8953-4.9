@@ -87,7 +87,7 @@ export ARCH=arm64
 export SUBARCH=arm64
 export CC=$PWD/Clang/bin/clang
 export CLANG_TREPLE=aarch64-linux-gnu-
-export CROSS_COMPILE=$PWD/Toolchain/bin/aarch64-linux-gnu-
+export CROSS_COMPILE=$PWD/Toolchain/bin/aarch64-opt-linux-android-
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
 
@@ -95,7 +95,7 @@ export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 # export DTB=$PWD/out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb
 
-git clone https://github.com/dinosnore1/aarch64-linux-gnu-8.2.1 Toolchain --depth=1
+git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
 git clone https://github.com/nibaji/DragonTC-9.0 --depth=1 Clang
 
 git submodule init
