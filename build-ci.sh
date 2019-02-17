@@ -107,7 +107,7 @@ make O=out -j$(grep -c '^processor' /proc/cpuinfo)
 if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	echo -e "Kernel compilation failed, See buildlog to fix errors"
 	finerr
-	exit 1
+	exit 127
 fi
 
 cp $IMG nito-ak2/
