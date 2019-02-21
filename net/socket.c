@@ -610,6 +610,9 @@ void sock_release(struct socket *sock)
 		struct module *owner = sock->ops->owner;
 
 		sock->ops->release(sock);
+		sock->sk = NULL;
+		if (inode)
+			inode_unlock(inode);
 		sock->ops = NULL;
 		module_put(owner);
 	}
