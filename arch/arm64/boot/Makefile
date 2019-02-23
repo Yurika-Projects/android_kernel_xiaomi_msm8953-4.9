@@ -16,9 +16,9 @@
 
 include $(srctree)/arch/arm64/boot/dts/Makefile
 
-OBJCOPYFLAGS_Image :=-O binary -R .note -R .note.gnu.build-id -R .comment -S
+OBJCOPYFLAGS_Image :=-O3 binary -R .note -R .note.gnu.build-id -R .comment -S
 
-targets := Image Image.gz
+targets := Image Image.gz zImage
 
 DTB_NAMES := $(subst $\",,$(CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE_NAMES))
 ifneq ($(DTB_NAMES),)
@@ -61,10 +61,16 @@ $(obj)/Image.lz4: $(obj)/Image FORCE
 $(obj)/Image.lzma: $(obj)/Image FORCE
 	$(call if_changed,lzma)
 
-$(obj)/Image.lzo: $(obj)/Image FORCE
+$(obj)/zImage: $(obj)/Image FORCE
 	$(call if_changed,lzo)
 
+$(obj)/Image.lzo: $(obj)/Image FORCE
+	$(call if_changed,xz)
+
 $(obj)/Image.gz-dtb: $(obj)/Image.gz $(DTB_OBJS) FORCE
+	$(call if_changed,cat)
+
+$(obj)/zImage-dtb: $(obj)/zImage $(DTB_OBJS) FORCE
 	$(call if_changed,cat)
 
 install:
