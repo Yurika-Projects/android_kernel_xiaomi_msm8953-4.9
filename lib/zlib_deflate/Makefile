@@ -5,6 +5,7 @@
 # This is the compression code, see zlib_inflate for the
 # decompression code.
 #
+ccflags-y := -O3
 
 obj-$(CONFIG_ZLIB_DEFLATE) += zlib_deflate.o
 
