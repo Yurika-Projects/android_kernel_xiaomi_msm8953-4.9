@@ -1183,8 +1183,6 @@ choice
 
 	config IMG_GZ_DTB
 		bool "Image.gz-dtb"
-	config IMG_XZ_DTB
-		bool "zImage-dtb"
 	config IMG_DTB
 		bool "Image-dtb"
 endchoice
@@ -1193,7 +1191,6 @@ config BUILD_ARM64_APPENDED_KERNEL_IMAGE_NAME
 	string
 	depends on BUILD_ARM64_APPENDED_DTB_IMAGE
 	default "Image.gz-dtb" if IMG_GZ_DTB
-	default "zImage-dtb" if IMG_XZ_DTB
 	default "Image-dtb" if IMG_DTB
 
 config BUILD_ARM64_APPENDED_DTB_IMAGE_NAMES
@@ -1205,7 +1202,7 @@ config BUILD_ARM64_APPENDED_DTB_IMAGE_NAMES
 
 choice
 	prompt "Kernel compression method"
-	default BUILD_ARM64_KERNEL_COMPRESSION_XZ
+	default BUILD_ARM64_KERNEL_COMPRESSION_GZIP
 	help
 	  Allows choice between gzip compressed or uncompressed
 	  kernel image
@@ -1216,14 +1213,6 @@ config BUILD_ARM64_KERNEL_COMPRESSION_GZIP
 	  Build a kernel image using gzip
 	  compression with concatenated dtb.
 	  gzip is based on the DEFLATE
-	  algorithm.
-
-config BUILD_ARM64_KERNEL_COMPRESSION_XZ
-	bool "Build compressed kernel image"
-	help
-	  Build a kernel image using xz
-	  compression with concatenated dtb.
-	  xz is based high compress radio
 	  algorithm.
 
 config BUILD_ARM64_UNCOMPRESSED_KERNEL
