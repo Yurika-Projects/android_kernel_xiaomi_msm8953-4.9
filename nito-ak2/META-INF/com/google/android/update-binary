@@ -75,10 +75,9 @@ fi;
 
 ui_print "##############################";
 ui_print "#                             ";
-ui_print "# $(file_getprop anykernel.sh kernel.string) ";
+ui_print "#     $(file_getprop anykernel.sh kernel.string) ";
 ui_print "#                             ";
 ui_print "##############################";
-ui_print " ";
 if [ -f version ]; then
   ui_print " ";
   while IFS='' read -r line || $bb [[ -n "$line" ]]; do
