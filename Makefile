@@ -668,7 +668,8 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, format-truncation)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, attribute-alias)
-KBUILD_CFLAGS   += $(call cc-disable-warning, -Wmemset-elt-size)
+KBUILD_CFLAGS   += $(call cc-disable-warning, memset-elt-size,)
+KBUILD_CFLAGS   += $(call cc-disable-warning, misleading-indentation,)
 
 ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
 KBUILD_CFLAGS	+= $(call cc-option,-ffunction-sections,)
