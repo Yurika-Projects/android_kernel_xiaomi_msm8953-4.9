@@ -70,7 +70,6 @@ static int lz4hc_decompress_crypto(struct crypto_tfm *tfm, const u8 *src,
 
 	err = lz4_decompress_unknownoutputsize(src, __slen, dst, &tmp_len);
 	if (err < 0)
->>>>>>> parent of 3f8452377bcf... crypto: change LZ4 modules to work with new LZ4 module version
 		return -EINVAL;
 
 	*dlen = tmp_len;
