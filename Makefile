@@ -670,6 +670,7 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, attribute-alias)
 KBUILD_CFLAGS   += $(call cc-disable-warning, memset-elt-size,)
 KBUILD_CFLAGS   += $(call cc-disable-warning, misleading-indentation,)
+KBUILD_CFLAGS   += $(call cc-disable-warning, incompatible-pointer-types)
 
 ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
 KBUILD_CFLAGS	+= $(call cc-option,-ffunction-sections,)

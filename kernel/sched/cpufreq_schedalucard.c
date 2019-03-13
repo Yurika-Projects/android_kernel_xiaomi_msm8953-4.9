@@ -18,11 +18,9 @@
 #include <linux/kthread.h>
 #include <linux/slab.h>
 #include <trace/events/power.h>
-
+#include <linux/sched/sysctl.h>
 #include "sched.h"
 #include "tune.h"
-
-unsigned long boosted_cpu_util(int cpu);
 
 /* Stub out fast switch routines present on mainline to reduce the backport
  * overhead. */
@@ -381,7 +379,6 @@ static void acgov_get_util(unsigned long *util, unsigned long *max, u64 time)
 	rt = div64_u64(rq->rt_avg, sched_avg_period() + delta);
 	rt = (rt * max_cap) >> SCHED_CAPACITY_SHIFT;
 
-	*util = boosted_cpu_util(cpu);
 	if (likely(use_pelt()))
 		*util = *util + rt;
 
@@ -601,7 +598,7 @@ static void acgov_irq_work(struct irq_work *irq_work)
 	 * after the work_in_progress flag is cleared. The effects of that are
 	 * neglected for now.
 	 */
-	queue_kthread_work(&sg_policy->worker, &sg_policy->work);
+	kthread_queue_work(&sg_policy->worker, &sg_policy->work);
 }
 
 /************************** sysfs interface ************************/
@@ -941,8 +938,8 @@ static int acgov_kthread_create(struct acgov_policy *sg_policy)
 	if (policy->fast_switch_enabled)
 		return 0;
 
-	init_kthread_work(&sg_policy->work, acgov_work);
-	init_kthread_worker(&sg_policy->worker);
+	kthread_init_work(&sg_policy->work, acgov_work);
+	kthread_init_worker(&sg_policy->worker);
 	thread = kthread_create(kthread_worker_fn, &sg_policy->worker,
 				"acgov:%d",
 				cpumask_first(policy->related_cpus));
@@ -974,7 +971,7 @@ static void acgov_kthread_stop(struct acgov_policy *sg_policy)
 	if (sg_policy->policy->fast_switch_enabled)
 		return;
 
-	flush_kthread_worker(&sg_policy->worker);
+	kthread_flush_worker(&sg_policy->worker);
 	kthread_stop(sg_policy->thread);
 	mutex_destroy(&sg_policy->work_lock);
 }
@@ -1213,32 +1210,17 @@ static int acgov_limits(struct cpufreq_policy *policy)
 	return 0;
 }
 
-static int cpufreq_schedalucard_cb(struct cpufreq_policy *policy,
-				unsigned int event)
-{
-	switch(event) {
-	case CPUFREQ_GOV_POLICY_INIT:
-		return acgov_init(policy);
-	case CPUFREQ_GOV_POLICY_EXIT:
-		return acgov_exit(policy);
-	case CPUFREQ_GOV_START:
-		return acgov_start(policy);
-	case CPUFREQ_GOV_STOP:
-		return acgov_stop(policy);
-	case CPUFREQ_GOV_LIMITS:
-		return acgov_limits(policy);
-	default:
-		BUG();
-	}
-}
-
 #ifndef CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDALUCARD
 static
 #endif
 struct cpufreq_governor cpufreq_gov_schedalucard = {
 	.name = "schedalucard",
-	.governor = cpufreq_schedalucard_cb,
 	.owner = THIS_MODULE,
+	.init = acgov_init,
+	.exit = acgov_exit,
+	.start = acgov_start,
+	.stop = acgov_stop,
+	.limits = acgov_limits,
 };
 
 static int __init acgov_register(void)
