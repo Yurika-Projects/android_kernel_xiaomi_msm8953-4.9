@@ -5,14 +5,13 @@
  */
 
 #include "dm.h"
-#include "dm-bufio.h"
 #include "dm-core.h"
 
 #include <linux/crc32.h>
+#include <linux/dm-bufio.h>
 #include <linux/module.h>
 
 #define DM_MSG_PREFIX "bow"
-#define SECTOR_SIZE 512
 
 struct log_entry {
 	u64 source;
@@ -176,7 +175,7 @@ static int split_range(struct bow_context *bc, struct bow_range **br,
 
 	if (bi_iter->bi_sector < (*br)->sector) {
 		WARN_ON(true);
-		return -EIO;
+		return BLK_STS_IOERR;
 	}
 
 	if (bi_iter->bi_sector > (*br)->sector) {
@@ -184,7 +183,7 @@ static int split_range(struct bow_context *bc, struct bow_range **br,
 			kzalloc(sizeof(*leading_br), GFP_KERNEL);
 
 		if (!leading_br)
-			return -ENOMEM;
+			return BLK_STS_RESOURCE;
 
 		*leading_br = **br;
 		if (leading_br->type == TRIMMED)
@@ -197,20 +196,20 @@ static int split_range(struct bow_context *bc, struct bow_range **br,
 	if (bvec_top(bi_iter) >= range_top(*br)) {
 		bi_iter->bi_size = (range_top(*br) - (*br)->sector)
 					* SECTOR_SIZE;
-		return 0;
+		return BLK_STS_OK;
 	}
 
 	/* new_br will be the beginning, existing br will be the tail */
 	new_br = kzalloc(sizeof(*new_br), GFP_KERNEL);
 	if (!new_br)
-		return -ENOMEM;
+		return BLK_STS_RESOURCE;
 
 	new_br->sector = (*br)->sector;
 	(*br)->sector = bvec_top(bi_iter);
 	add_before(&bc->ranges, new_br, *br);
 	*br = new_br;
 
-	return 0;
+	return BLK_STS_OK;
 }
 
 /*
@@ -267,8 +266,7 @@ static struct bow_range *find_free_range(struct bow_context *bc)
 
 static sector_t sector_to_page(struct bow_context const *bc, sector_t sector)
 {
-	WARN_ON((sector & (((sector_t)1 << (bc->block_shift - SECTOR_SHIFT)) - 1))
-		!= 0);
+	WARN_ON(sector % (bc->block_size / SECTOR_SIZE) != 0);
 	return sector >> (bc->block_shift - SECTOR_SHIFT);
 }
 
@@ -280,7 +278,7 @@ static int copy_data(struct bow_context const *bc,
 
 	if (range_size(source) != range_size(dest)) {
 		WARN_ON(1);
-		return -EIO;
+		return BLK_STS_IOERR;
 	}
 
 	if (checksum)
@@ -293,8 +291,7 @@ static int copy_data(struct bow_context const *bc,
 
 		read = dm_bufio_read(bc->bufio, page, &read_buffer);
 		if (IS_ERR(read)) {
-			DMERR("Cannot read page %llu",
-			      (unsigned long long)page);
+			DMERR("Cannot read page %lu", page);
 			return PTR_ERR(read);
 		}
 
@@ -318,7 +315,7 @@ static int copy_data(struct bow_context const *bc,
 	}
 
 	dm_bufio_write_dirty_buffers(bc->bufio);
-	return 0;
+	return BLK_STS_OK;
 }
 
 /****** logging functions ******/
@@ -337,18 +334,18 @@ static int backup_log_sector(struct bow_context *bc)
 
 	if (first_br->type != SECTOR0) {
 		WARN_ON(1);
-		return -EIO;
+		return BLK_STS_IOERR;
 	}
 
 	if (range_size(first_br) != bc->block_size) {
 		WARN_ON(1);
-		return -EIO;
+		return BLK_STS_IOERR;
 	}
 
 	free_br = find_free_range(bc);
 	/* No space left - return this error to userspace */
 	if (!free_br)
-		return -ENOSPC;
+		return BLK_STS_NOSPC;
 	bi_iter.bi_sector = free_br->sector;
 	bi_iter.bi_size = bc->block_size;
 	ret = split_range(bc, &free_br, &bi_iter);
@@ -356,7 +353,7 @@ static int backup_log_sector(struct bow_context *bc)
 		return ret;
 	if (bi_iter.bi_size != bc->block_size) {
 		WARN_ON(1);
-		return -EIO;
+		return BLK_STS_IOERR;
 	}
 
 	ret = copy_data(bc, first_br, free_br, &checksum);
@@ -371,7 +368,7 @@ static int backup_log_sector(struct bow_context *bc)
 		return ret;
 
 	set_type(bc, &free_br, BACKUP);
-	return 0;
+	return BLK_STS_OK;
 }
 
 static int add_log_entry(struct bow_context *bc, sector_t source, sector_t dest,
@@ -393,7 +390,7 @@ static int add_log_entry(struct bow_context *bc, sector_t source, sector_t dest,
 	if (IS_ERR(sector)) {
 		DMERR("Cannot write boot sector");
 		dm_bufio_release(sector_buffer);
-		return -ENOSPC;
+		return BLK_STS_NOSPC;
 	}
 
 	bc->log_sector->entries[bc->log_sector->count].source = source;
@@ -406,7 +403,7 @@ static int add_log_entry(struct bow_context *bc, sector_t source, sector_t dest,
 	dm_bufio_mark_buffer_dirty(sector_buffer);
 	dm_bufio_release(sector_buffer);
 	dm_bufio_write_dirty_buffers(bc->bufio);
-	return 0;
+	return BLK_STS_OK;
 }
 
 static int prepare_log(struct bow_context *bc)
@@ -420,12 +417,12 @@ static int prepare_log(struct bow_context *bc)
 	first_br = container_of(rb_first(&bc->ranges), struct bow_range, node);
 	if (first_br->type != UNCHANGED) {
 		WARN_ON(1);
-		return -EIO;
+		return BLK_STS_IOERR;
 	}
 
 	if (range_size(first_br) < bc->block_size) {
 		WARN_ON(1);
-		return -EIO;
+		return BLK_STS_IOERR;
 	}
 	bi_iter.bi_sector = 0;
 	bi_iter.bi_size = bc->block_size;
@@ -435,13 +432,13 @@ static int prepare_log(struct bow_context *bc)
 	first_br->type = SECTOR0;
 	if (range_size(first_br) != bc->block_size) {
 		WARN_ON(1);
-		return -EIO;
+		return BLK_STS_IOERR;
 	}
 
 	/* Find free sector for active sector0 reads/writes */
 	free_br = find_free_range(bc);
 	if (!free_br)
-		return -ENOSPC;
+		return BLK_STS_NOSPC;
 	bi_iter.bi_sector = free_br->sector;
 	bi_iter.bi_size = bc->block_size;
 	ret = split_range(bc, &free_br, &bi_iter);
@@ -459,7 +456,7 @@ static int prepare_log(struct bow_context *bc)
 	/* Find free sector to back up original sector zero */
 	free_br = find_free_range(bc);
 	if (!free_br)
-		return -ENOSPC;
+		return BLK_STS_NOSPC;
 	bi_iter.bi_sector = free_br->sector;
 	bi_iter.bi_size = bc->block_size;
 	ret = split_range(bc, &free_br, &bi_iter);
@@ -489,7 +486,7 @@ static int prepare_log(struct bow_context *bc)
 		return ret;
 
 	set_type(bc, &free_br, BACKUP);
-	return 0;
+	return BLK_STS_OK;
 }
 
 static struct bow_range *find_sector0_current(struct bow_context *bc)
@@ -752,7 +749,7 @@ static int prepare_unchanged_range(struct bow_context *bc, struct bow_range *br,
 	/* Find a free range */
 	backup_br = find_free_range(bc);
 	if (!backup_br)
-		return -ENOSPC;
+		return BLK_STS_NOSPC;
 
 	/* Carve out a backup range. This may be smaller than the br given */
 	backup_bi.bi_sector = backup_br->sector;
@@ -771,7 +768,7 @@ static int prepare_unchanged_range(struct bow_context *bc, struct bow_range *br,
 		return ret;
 	if (range_size(br) != range_size(backup_br)) {
 		WARN_ON(1);
-		return -EIO;
+		return BLK_STS_IOERR;
 	}
 
 
@@ -826,14 +823,14 @@ static int prepare_free_range(struct bow_context *bc, struct bow_range *br,
 	if (ret)
 		return ret;
 	set_type(bc, &br, CHANGED);
-	return 0;
+	return BLK_STS_OK;
 }
 
 static int prepare_changed_range(struct bow_context *bc, struct bow_range *br,
 				 struct bvec_iter *bi_iter)
 {
 	/* Nothing to do ... */
-	return 0;
+	return BLK_STS_OK;
 }
 
 static int prepare_one_range(struct bow_context *bc,
@@ -863,7 +860,7 @@ static int prepare_one_range(struct bow_context *bc,
 	case TOP:	/* Illegal - top is off the end of the device */
 	default:
 		WARN_ON(1);
-		return -EIO;
+		return BLK_STS_IOERR;
 	}
 }
 
@@ -879,7 +876,7 @@ static void bow_write(struct work_struct *work)
 	struct bow_context *bc = ww->bc;
 	struct bio *bio = ww->bio;
 	struct bvec_iter bi_iter = bio->bi_iter;
-	int ret = 0;
+	int ret = BLK_STS_OK;
 
 	kfree(ww);
 
@@ -895,11 +892,11 @@ static void bow_write(struct work_struct *work)
 	mutex_unlock(&bc->ranges_lock);
 
 	if (!ret) {
-		bio->bi_bdev = bc->dev->bdev;
+		bio_set_dev(bio, bc->dev->bdev);
 		submit_bio(bio);
 	} else {
 		DMERR("Write failure with error %d", -ret);
-		bio->bi_error = ret;
+		bio->bi_status = ret;
 		bio_endio(bio);
 	}
 }
@@ -928,17 +925,17 @@ static int handle_sector0(struct bow_context *bc, struct bio *bio)
 		struct bio * split = bio_split(bio,
 					       bc->block_size >> SECTOR_SHIFT,
 					       GFP_NOIO,
-					       fs_bio_set);
+					       &fs_bio_set);
 		if (!split) {
 			DMERR("Failed to split bio");
-			bio->bi_error = -ENOMEM;
+			bio->bi_status = BLK_STS_RESOURCE;
 			bio_endio(bio);
 			return DM_MAPIO_SUBMITTED;
 		}
 
 		bio_chain(split, bio);
 		split->bi_iter.bi_sector = bc->log_sector->sector0;
-		split->bi_bdev = bc->dev->bdev;
+		bio_set_dev(split, bc->dev->bdev);
 		submit_bio(split);
 
 		if (bio_data_dir(bio) == WRITE)
@@ -955,9 +952,8 @@ static int add_trim(struct bow_context *bc, struct bio *bio)
 	struct bow_range *br;
 	struct bvec_iter bi_iter = bio->bi_iter;
 
-	DMDEBUG("add_trim: %llu, %u",
-		(unsigned long long)bio->bi_iter.bi_sector,
-		bio->bi_iter.bi_size);
+	DMDEBUG("add_trim: %lu, %u",
+		bio->bi_iter.bi_sector, bio->bi_iter.bi_size);
 
 	do {
 		br = find_first_overlapping_range(&bc->ranges, &bi_iter);
@@ -994,9 +990,8 @@ static int remove_trim(struct bow_context *bc, struct bio *bio)
 	struct bow_range *br;
 	struct bvec_iter bi_iter = bio->bi_iter;
 
-	DMDEBUG("remove_trim: %llu, %u",
-		(unsigned long long)bio->bi_iter.bi_sector,
-		bio->bi_iter.bi_size);
+	DMDEBUG("remove_trim: %lu, %u",
+		bio->bi_iter.bi_sector, bio->bi_iter.bi_size);
 
 	do {
 		br = find_first_overlapping_range(&bc->ranges, &bi_iter);
@@ -1030,11 +1025,11 @@ static int remove_trim(struct bow_context *bc, struct bio *bio)
 int remap_unless_illegal_trim(struct bow_context *bc, struct bio *bio)
 {
 	if (!bc->forward_trims && bio_op(bio) == REQ_OP_DISCARD) {
-		bio->bi_error = -EINVAL;
+		bio->bi_status = BLK_STS_NOTSUPP;
 		bio_endio(bio);
 		return DM_MAPIO_SUBMITTED;
 	} else {
-		bio->bi_bdev = bc->dev->bdev;
+		bio_set_dev(bio, bc->dev->bdev);
 		return DM_MAPIO_REMAPPED;
 	}
 }
@@ -1121,9 +1116,8 @@ static void dm_bow_tablestatus(struct dm_target *ti, char *result,
 	for (i = rb_first(&bc->ranges); i; i = rb_next(i)) {
 		struct bow_range *br = container_of(i, struct bow_range, node);
 
-		result += scnprintf(result, end - result, "%s: %llu",
-				    readable_type[br->type],
-				    (unsigned long long)br->sector);
+		result += scnprintf(result, end - result, "%s: %lu",
+				    readable_type[br->type], br->sector);
 		if (result >= end)
 			return;
 
@@ -1182,8 +1176,7 @@ static void dm_bow_status(struct dm_target *ti, status_type_t type,
 	}
 }
 
-int dm_bow_prepare_ioctl(struct dm_target *ti, struct block_device **bdev,
-			 fmode_t *mode)
+int dm_bow_prepare_ioctl(struct dm_target *ti, struct block_device **bdev)
 {
 	struct bow_context *bc = ti->private;
 	struct dm_dev *dev = bc->dev;
