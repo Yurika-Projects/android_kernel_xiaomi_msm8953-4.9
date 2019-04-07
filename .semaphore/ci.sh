@@ -21,7 +21,7 @@ export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push() {
-	JIP="Nito-Kernel-CI-$BUILD_TIME.zip"
+	JIP="Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_TIME.zip"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 	     -F chat_id="$TELEGRAM_ID"
 }
@@ -71,15 +71,6 @@ function finerr() {
 
 export DATE=`date`
 export BUILD_START=$(date "+%s")
-
-tg_sendstick
-
-tg_channelcast "<b>Nito Kernel</b> new build!" \
-		"Started on <b>Ubuntu 16.04 LTS (Xenial)</b>" \
-		"From <b>9.0-caf-upstream (Nito Kernel Mainline) </b>" \
-		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
-		"Started on <b>$(date)</b>"
-
 export ARCH=arm64
 export SUBARCH=arm64
 export CC=$PWD/Clang/bin/clang
@@ -90,6 +81,18 @@ export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
 export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
+export VERSION_TG="r6.1 Solitary Dream"
+export ZIP_VERSION="r6.1-Solitary-Dream"
+export BUILD_TYPE="CI"
+
+tg_sendstick
+
+tg_channelcast "<b>Nito Kernel</b> new build!" \
+		"Version: <b>$VERSION_TG</b>" \
+		"Started on <b>Ubuntu 16.04 LTS (Xenial)</b>" \
+		"From <b>9.0-caf-upstream (Nito Kernel Mainline) </b>" \
+		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
+		"Started on <b>$(date)</b>"
 
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
 git clone https://github.com/Z5X67280/aosp-clang-mirror --depth=1 Clang
@@ -110,7 +113,7 @@ export BUILD_TIME=$(date "+%Y%m%d-%H:%M:%S-$(git log --pretty=format:'%h' -1)")
 
 cp $IMG nito-ak2/
 cd nito-ak2/
-zip -r9 -9 "Nito-Kernel-CI-$BUILD_TIME.zip" .
+zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_TIME.zip" .
 echo "Flashable zip generated."
 
 tg_channelcast "Notes: Don't try install it on non-4.9 roms." \
