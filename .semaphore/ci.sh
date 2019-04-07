@@ -70,6 +70,8 @@ function r6relphotosend() {
 	curl -s "https://api.telegram.org/bot$BOT_API_KEY/sendPhoto" \
 	     -d chat_id="$TELEGRAM_ID" \
 	     -d photo="../rel.jpg"
+}
+
 #
 # Telegram FUNCTION end
 #
@@ -102,8 +104,8 @@ tg_channelcast "<b>Nito Kernel</b> new build!" \
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
 git clone https://github.com/Z5X67280/aosp-clang-mirror --depth=1 Clang
 
-make O=out vince-perf_defconfig -j32
-make O=out -j32
+make O=out vince-perf_defconfig -j40
+make O=out -j40
 
 if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	echo -e "Kernel compilation failed, See buildlog to fix errors"
