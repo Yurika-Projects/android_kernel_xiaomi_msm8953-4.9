@@ -411,7 +411,7 @@
 	 				<12 12 12 12 12 12 12 12>;
 
 				qcom,cpr-corner-fmax-map =
-					<1 2 4 19>;
+					<1 2 4 12>;
 
 				qcom,cpr-voltage-ceiling =
 					<715000  715000 745000 790000 800000
