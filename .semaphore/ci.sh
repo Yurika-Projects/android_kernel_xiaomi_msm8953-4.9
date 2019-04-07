@@ -65,6 +65,11 @@ function finerr() {
 	exit 1
 }
 
+# Send Release Photo
+function r6relphotosend() {
+	curl -s "https://api.telegram.org/bot$BOT_API_KEY/sendPhoto" \
+	     -d chat_id="$TELEGRAM_ID" \
+	     -d photo="../rel.jpg"
 #
 # Telegram FUNCTION end
 #
@@ -122,6 +127,7 @@ tg_channelcast "Notes: Don't try install it on non-4.9 roms." \
 push
 cd ..
 fin
+r6relphotosend
 
 echo "Build done!"
 
