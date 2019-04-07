@@ -75,7 +75,8 @@ export BUILD_START=$(date "+%s")
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel</b> new build!" \
-		"Started on <b>$(hostname)</b>" \
+		"Started on <b>Ubuntu 16.04 LTS (Xenial)</b>" \
+		"From <b>9.0-caf-upstream (Nito Kernel Mainline) </b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
 		"Started on <b>$(date)</b>"
 
