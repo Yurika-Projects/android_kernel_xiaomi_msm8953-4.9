@@ -72,15 +72,6 @@ function finerr() {
 export DATE=`date`
 export BUILD_START=$(date "+%s")
 
-tg_sendstick
-
-tg_channelcast "<b>Nito Kernel</b> new build!" \
-		"Started on <b>Ubuntu 16.04 LTS (Xenial)</b>" \
-		"Version: <b>$VERSION_TG</b>" \
-		"From <b>lite (Nito Kernel Lite Sildeline)</b>" \
-		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
-		"Started on <b>$(date)</b>"
-
 export ARCH=arm64
 export SUBARCH=arm64
 export CC=$PWD/Clang/bin/clang
@@ -91,9 +82,18 @@ export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
 export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="r6 Lite Antithese"
-export ZIP_VERSION="r6-Lite-Antithese"
+export VERSION_TG="r6 Lite Ikasu"
+export ZIP_VERSION="r6-Lite-Ikasu"
 export BUILD_TYPE="CI"
+
+tg_sendstick
+
+tg_channelcast "<b>Nito Kernel</b> new build!" \
+		"Started on <b>Ubuntu 16.04 LTS (Xenial)</b>" \
+		"Version: <b>$VERSION_TG</b>" \
+		"From <b>lite (Nito Kernel Lite Sildeline)</b>" \
+		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
+		"Started on <b>$(date)</b>"
 
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
 git clone https://github.com/Z5X67280/aosp-clang-mirror --depth=1 Clang
