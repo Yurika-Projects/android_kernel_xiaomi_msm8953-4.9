@@ -15,6 +15,9 @@ git clone https://github.com/fabianonline/telegram.sh telegram
 TELEGRAM_ID=-1001268516549
 TELEGRAM=telegram/telegram
 BOT_API_KEY=723044228:AAFpmF9aHsMTinCJ7Yq3HLxEzjEBiO47rlU
+TELEGRAM_TOKEN=${BOT_API_KEY}
+
+export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push() {
@@ -95,10 +98,10 @@ tg_channelcast "<b>Nito Kernel</b> new build!" \
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
 git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
 
-sudo apt install ccache -y
+sudo apt install ccache bc -y
 
-make O=out vince-perf_defconfig -j40
-make O=out -j40
+make O=out vince-perf_defconfig -j64
+make O=out -j64
 
 if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	echo -e "Kernel compilation failed, See buildlog to fix errors"
