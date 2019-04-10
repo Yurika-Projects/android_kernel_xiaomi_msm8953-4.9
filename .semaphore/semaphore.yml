@@ -1,12 +1,14 @@
 version: v1.0
-name: Fak nito kernel
- agent:
+name: Fak Nito Kernel
+agent:
   machine:
     type: e1-standard-8
     os_image: ubuntu1804
+blocks:
+  - name: "Fak Kernel"
+    task:
       jobs:
-      - name: Fak Kernel
+      - name: Compile Kernel
         commands:
           - checkout
-	        - chmod +x ci.sh
-          - ./ci.sh
+          - ./.semaphore/ci.sh
