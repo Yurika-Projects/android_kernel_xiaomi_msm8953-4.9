@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Nito CI Script v2
+# Nito CI Script v2.1
 # Copyright (C) 2019 urK -kernelaesthesia- (Z5X67280@163.com)
 # Copyright (C) 2019 Raphiel Rollerscaperers (raphielscape)
 # Copyright (C) 2019 Rama Bondan Prakoso (rama982) 
@@ -15,9 +15,6 @@ git clone https://github.com/fabianonline/telegram.sh telegram
 TELEGRAM_ID=-1001268516549
 TELEGRAM=telegram/telegram
 BOT_API_KEY=723044228:AAFpmF9aHsMTinCJ7Yq3HLxEzjEBiO47rlU
-TELEGRAM_TOKEN=${BOT_API_KEY}
-
-export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push() {
@@ -89,14 +86,16 @@ export BUILD_TYPE="CI"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel</b> new build!" \
-		"Started on <b>Ubuntu 16.04 LTS (Xenial)</b>" \
+		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
 		"Version: <b>$VERSION_TG</b>" \
 		"From <b>lite (Nito Kernel Lite Sildeline)</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
 		"Started on <b>$(date)</b>"
 
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
-git clone https://github.com/Z5X67280/aosp-clang-mirror --depth=1 Clang
+git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
+
+sudo apt install ccache -y
 
 make O=out vince-perf_defconfig -j40
 make O=out -j40
