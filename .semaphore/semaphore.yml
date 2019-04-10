@@ -11,4 +11,5 @@ blocks:
       - name: Compile Kernel
         commands:
           - checkout
+          - chmod +x .semaphore/ci.sh
           - ./.semaphore/ci.sh
