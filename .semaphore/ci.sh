@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Nito CI Script v2.1
+# Nito CI Script v2.2
 # Copyright (C) 2019 urK -kernelaesthesia- (Z5X67280@163.com)
 # Copyright (C) 2019 Raphiel Rollerscaperers (raphielscape)
 # Copyright (C) 2019 Rama Bondan Prakoso (rama982) 
@@ -74,12 +74,11 @@ export BUILD_START=$(date "+%s")
 
 export ARCH=arm64
 export SUBARCH=arm64
-export CC=$PWD/Clang/bin/clang
 export CLANG_TREPLE=aarch64-linux-gnu-
 export USE_CCACHE=1
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
-export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
+export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export VERSION_TG="r6 Lite Ikasu"
@@ -89,19 +88,20 @@ export BUILD_TYPE="CI"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel</b> new build!" \
-		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
 		"Version: <b>$VERSION_TG</b>" \
-		"From <b>lite (Nito Kernel Lite Sildeline)</b>" \
+		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
+		"From <b>Nito Kernel Lite Sildeline</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
 		"Started on <b>$(date)</b>"
 
-git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
+git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc9-20190401 --depth=1 Toolchain
 git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
+export CC=$PWD/Clang/bin/clang
 
 sudo apt install ccache bc -y
 
-make O=out vince-perf_defconfig -j64
-make O=out -j64
+make O=out vince-perf_defconfig -j128
+make O=out -j128
 
 if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	echo -e "Kernel compilation failed, See buildlog to fix errors"
