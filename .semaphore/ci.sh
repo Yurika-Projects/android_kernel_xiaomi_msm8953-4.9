@@ -73,12 +73,11 @@ export DATE=`date`
 export BUILD_START=$(date "+%s")
 export ARCH=arm64
 export SUBARCH=arm64
-export CC=$PWD/Clang/bin/clang
 export CLANG_TREPLE=aarch64-linux-gnu-
 export USE_CCACHE=1
-export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
+export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-linux-gnu-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
-export KBUILD_BUILD_HOST="-buildaesthesia- Travis-CI"
+export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export VERSION_TG="r6.1 Solitary Dream"
@@ -90,12 +89,13 @@ tg_sendstick
 tg_channelcast "<b>Nito Kernel</b> new build!" \
 		"Version: <b>$VERSION_TG</b>" \
 		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
-		"From <b>9.0-caf-upstream (Nito Kernel Mainline) </b>" \
+		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
 		"Started on <b>$(date)</b>"
 
-git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
+git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc9-20190401 --depth=1 Toolchain
 git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
+export CC=$PWD/Clang/bin/clang
 
 sudo apt install ccache bc -y
 
