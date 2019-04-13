@@ -1,7 +1,0 @@
-language: c
-dist: xenial
-git:
- depth: 1
-script: 
- - chmod +x .semaphore/ci.sh
- - ./.semaphore/ci.sh
