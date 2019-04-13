@@ -80,8 +80,8 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="r6 Lite Ikasu"
-export ZIP_VERSION="r6-Lite-Ikasu"
+export VERSION_TG="r7 Lite Grimheart"
+export ZIP_VERSION="r7-Lite"
 export BUILD_TYPE="CI"
 
 tg_sendstick
