@@ -106,6 +106,7 @@ make O=out -j128
 if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	echo -e "Kernel compilation failed, See buildlog to fix errors"
 	finerr
+	export SEMAPHORE_JOB_RESULT=failed
 	exit 127
 fi
 
