@@ -100,8 +100,8 @@ export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*
 
 sudo apt install ccache bc -y
 
-make O=out vince-perf_defconfig -j128
-make O=out -j128
+make O=out vince-perf_defconfig -j64
+make O=out -j64
 
 if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	echo -e "Kernel compilation failed, See buildlog to fix errors"
