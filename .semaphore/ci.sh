@@ -79,7 +79,6 @@ export USE_CCACHE=1
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
-export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export VERSION_TG="r6 Lite Ikasu"
 export ZIP_VERSION="r6-Lite-Ikasu"
@@ -96,7 +95,9 @@ tg_channelcast "<b>Nito Kernel</b> new build!" \
 
 git clone https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc9-20190401 --depth=1 Toolchain
 git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
+
 export CC=$PWD/Clang/bin/clang
+export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
 sudo apt install ccache bc -y
 
