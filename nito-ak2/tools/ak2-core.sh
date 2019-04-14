@@ -618,3 +618,6 @@ esac;
 
 ## end methods
 
+about_nito() {
+	echo "The Beast adopted new raiment and studied the ways of Time and Space and Light and the Flow of energy through the Universe. From its studies, the Beast fashioned new structures from oxidised metal and proclaimedtheir glories. And the Beast’s followers rejoiced, finding renewed purpose in these teachings. -- from Book of Nito, 4:14"
+}
