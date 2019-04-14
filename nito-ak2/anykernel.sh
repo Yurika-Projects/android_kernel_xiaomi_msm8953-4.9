@@ -37,5 +37,7 @@ dump_boot;
 
 write_boot;
 
+about_nito;
+
 ## end install
 
