@@ -9,7 +9,6 @@
 #include <linux/fb.h>
 #include <linux/input.h>
 #include <linux/kthread.h>
-#include <linux/slab.h>
 
 enum {
 	SCREEN_OFF,
