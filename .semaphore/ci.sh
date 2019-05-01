@@ -75,7 +75,6 @@ export BUILD_START=$(date "+%s")
 export ARCH=arm64
 export SUBARCH=arm64
 export CLANG_TREPLE=aarch64-linux-gnu-
-export USE_CCACHE=1
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
@@ -86,8 +85,9 @@ export BUILD_TYPE="CI"
 
 tg_sendstick
 
-tg_channelcast "<b>Nito Kernel</b> new build!" \
+tg_channelcast "<b>Nito Kernel $ZIP_VERSION</b> new build!" \
 		"Version: <b>$VERSION_TG</b>" \
+		"Stage: <b>Sync Upstream Kernel Tag</b>" \
 		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
 		"From <b>Nito Kernel Lite Sildeline</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
@@ -99,7 +99,7 @@ git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth
 export CC=$PWD/Clang/bin/clang
 export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
-sudo apt install ccache bc -y
+sudo apt install bc -y
 
 make O=out vince-perf_defconfig -j64
 make O=out -j64
@@ -119,9 +119,6 @@ cp $IMG nito-ak2/
 cd nito-ak2/
 zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_TIME.zip" .
 echo "Flashable zip generated."
-
-tg_channelcast "Notes: Don't try install it on non-4.9 roms." \
-	           "If u want to try, don't worry, I have already prepared Chopin’s songs for u."
 
 push
 cd ..
