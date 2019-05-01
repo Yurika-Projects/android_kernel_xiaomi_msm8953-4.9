@@ -86,7 +86,7 @@ tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $ZIP_VERSION</b> new build!" \
 		"Version: <b>$VERSION_TG</b>" \
-		"Stage: <b>Introduce K Lapse</b>" \
+		"Stage: <b>Sync Some Change From Genom</b>" \
 		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
