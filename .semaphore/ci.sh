@@ -79,14 +79,15 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="r7 Antithese"
+export VERSION_TG="r7 Lose Control"
 export ZIP_VERSION="r7"
 export BUILD_TYPE="CI"
 
 tg_sendstick
 
-tg_channelcast "<b>Nito Kernel</b> new build!" \
+tg_channelcast "<b>Nito Kernel $ZIP_VERSION</b> new build!" \
 		"Version: <b>$VERSION_TG</b>" \
+		"Stage: <b>Sync Upstream Kernel Tag</b>" \
 		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
@@ -119,9 +120,6 @@ cp $IMG nito-ak2/
 cd nito-ak2/
 zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_TIME.zip" .
 echo "Flashable zip generated."
-
-tg_channelcast "Notes: Don't try install it on non-4.9 roms." \
-	       "If u want to try, don't worry, I have already prepared Chopin’s songs for u."
 
 push
 cd ..
