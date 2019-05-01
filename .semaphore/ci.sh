@@ -74,7 +74,6 @@ export BUILD_START=$(date "+%s")
 export ARCH=arm64
 export SUBARCH=arm64
 export CLANG_TREPLE=aarch64-linux-gnu-
-export USE_CCACHE=1
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
@@ -99,7 +98,7 @@ git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth
 export CC=$PWD/Clang/bin/clang
 export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
-sudo apt install ccache bc -y
+sudo apt install bc -y
 
 make O=out vince-perf_defconfig -j64
 make O=out -j64
