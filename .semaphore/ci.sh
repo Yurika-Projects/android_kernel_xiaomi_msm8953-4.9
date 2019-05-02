@@ -78,14 +78,13 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="r7 Lose Control"
+export VERSION_TG="r7 Grievous Lady"
 export ZIP_VERSION="r7"
 export BUILD_TYPE="CI"
 
 tg_sendstick
 
-tg_channelcast "<b>Nito Kernel $ZIP_VERSION</b> new build!" \
-		"Version: <b>$VERSION_TG</b>" \
+tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
 		"Stage: <b>Rewrite Freq Table</b>" \
 		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
