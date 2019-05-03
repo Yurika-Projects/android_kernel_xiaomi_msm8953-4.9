@@ -80,12 +80,12 @@ export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export VERSION_TG="r7 Grievous Lady"
 export ZIP_VERSION="r7"
-export BUILD_TYPE="CI"
+export BUILD_TYPE="REL"
 
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Rewrite Freq Table</b>" \
+		"Stage: <b>Release</b>" \
 		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
@@ -105,7 +105,6 @@ make O=out -j64
 if ! [ -a out/arch/arm64/boot/Image.gz-dtb ]; then
 	echo -e "Kernel compilation failed, See buildlog to fix errors"
 	finerr
-	export SEMAPHORE_JOB_RESULT=failed
 	exit 127
 fi
 
