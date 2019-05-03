@@ -79,15 +79,14 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="r7 Lite Grimheart"
+export VERSION_TG="r7 Lite VECTOЯ"
 export ZIP_VERSION="r7-Lite"
-export BUILD_TYPE="CI"
+export BUILD_TYPE="REL"
 
 tg_sendstick
 
-tg_channelcast "<b>Nito Kernel $ZIP_VERSION</b> new build!" \
-		"Version: <b>$VERSION_TG</b>" \
-		"Stage: <b>Sync Some Change From Genom</b>" \
+tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
+		"Stage: <b>Release</b>" \
 		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
 		"From <b>Nito Kernel Lite Sildeline</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
