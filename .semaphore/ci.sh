@@ -78,14 +78,14 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="r7 Grievous Lady"
-export ZIP_VERSION="r7"
-export BUILD_TYPE="REL"
+export VERSION_TG="r7.1 Rocky Bunnie"
+export ZIP_VERSION="r7.1"
+export BUILD_TYPE="CI"
 
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Release</b>" \
+		"Stage: <b>We're Back!</b>" \
 		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
