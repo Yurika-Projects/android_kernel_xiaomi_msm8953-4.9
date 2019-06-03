@@ -4,11 +4,12 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=Nito Kernel
+kernel.string=Nito Kernel Install
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
 do.cleanuponabort=1
+supported.versions=28
 device.name1=vince
 '; } # end properties
 
