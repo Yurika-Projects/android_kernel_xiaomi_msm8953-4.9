@@ -74,9 +74,9 @@ if [ -f banner ]; then
 fi;
 
 ui_print "##############################";
-ui_print "#                             ";
-ui_print "#     $(file_getprop anykernel.sh kernel.string) ";
-ui_print "#                             ";
+ui_print "#                                   #";
+ui_print "#     $(file_getprop anykernel.sh kernel.string) #";
+ui_print "#                                   #";
 ui_print "##############################";
 if [ -f version ]; then
   ui_print " ";
@@ -85,9 +85,7 @@ if [ -f version ]; then
   done < version;
   ui_print " ";
 fi;
-ui_print " ";
-ui_print "- AnyKernel2 by osm0sis @ xda-developers";
-
+ui_print "- Thx AnyKernel2 By @osm0sis";
 
 unmount_all;
 if [ ! "$(is_mounted /system)" ]; then
@@ -133,13 +131,14 @@ if [ "$(file_getprop anykernel.sh do.devicecheck)" == 1 ]; then
   if [ ! "$match" ]; then
     abort "! Your device is: $testname"
     abort "! Unsupported device. Aborting...";
+    abort "! If it show this error, check your recovery first!"
   fi;
 fi;
 
 supported_ver="$(file_getprop anykernel.sh supported.versions | $bb tr -d '[:space:]')";
 if [ "$supported_ver" ]; then
   ui_print "- Checking Android version...";
-  android_ver="$(file_getprop /system/build.prop ro.build.version.release)";
+  android_ver="$(file_getprop /system/build.prop ro.build.version.sdk)";
   if [ "$(echo $supported_ver | $bb grep -)" ]; then
     lo_ver=$(echo $supported_ver | $bb cut -d- -f1);
     hi_ver=$(echo $supported_ver | $bb cut -d- -f2);
@@ -155,9 +154,11 @@ if [ "$supported_ver" ]; then
     done;
   fi;
   if [ "$supported" ]; then
-    ui_print "$android_ver";
+    ui_print "- Android SDK Version: $android_ver";
+    ui_print "- Supported Android Version.";
   else
-    abort "! Unsupported Android version. Aborting...";
+    abort "! Android SDK Version: $android_ver";
+    abort "! Unsupported Android Version. Aborting...";
   fi;
 fi;
 
