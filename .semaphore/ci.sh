@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Nito CI Script v2.2
+# Nito CI Script v3.0
 # Copyright (C) 2019 urK -kernelaesthesia- (Z5X67280@163.com)
 # Copyright (C) 2019 Raphiel Rollerscaperers (raphielscape)
 # Copyright (C) 2019 Rama Bondan Prakoso (rama982) 
@@ -80,12 +80,12 @@ export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export VERSION_TG="r7.1 Rocky Bunnie"
 export ZIP_VERSION="r7.1"
-export BUILD_TYPE="DONTFLASH"
+export BUILD_TYPE="WELCOME_TEST"
 
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Don't Flash</b>" \
+		"Stage: <b>Fix Typo</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>"
 
