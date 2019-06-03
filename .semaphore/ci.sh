@@ -80,16 +80,14 @@ export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export VERSION_TG="r7.1 Rocky Bunnie"
 export ZIP_VERSION="r7.1"
-export BUILD_TYPE="CI"
+export BUILD_TYPE="DONTFLASH"
 
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>We're Back!</b>" \
-		"Started on <b>Ubuntu 18.04 LTS (Bionic)</b>" \
+		"Stage: <b>Don't Flash</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
-		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>" \
-		"Started on <b>$(date)</b>"
+		"Under commit <b>$(git log --pretty=format:'"%h : %s"' -1)</b>"
 
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
 # git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
