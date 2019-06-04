@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Nito CI Script v3.0
+# Nito CI Script v4.0
 # Copyright (C) 2019 urK -kernelaesthesia- (Z5X67280@163.com)
 # Copyright (C) 2019 Raphiel Rollerscaperers (raphielscape)
 # Copyright (C) 2019 Rama Bondan Prakoso (rama982) 
@@ -20,8 +20,14 @@ TELEGRAM_TOKEN=${BOT_API_KEY}
 export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
-function push() {
+function push_package() {
 	JIP="Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_TIME.zip"
+	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
+	     -F chat_id="$TELEGRAM_ID"
+}
+
+function push_ms5sum() {
+	JIP="md5sum_$(git log --pretty=format:'%h' -1).txt"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 	     -F chat_id="$TELEGRAM_ID"
 }
@@ -69,6 +75,7 @@ function finerr() {
 # Telegram FUNCTION end
 #
 
+# Build Env
 export DATE=`date`
 export BUILD_START=$(date "+%s")
 export ARCH=arm64
@@ -82,37 +89,42 @@ export VERSION_TG="r7.1 Rocky Bunnie"
 export ZIP_VERSION="r7.1"
 export BUILD_TYPE="CI"
 
+# Telegram Stuff 
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>New Package</b>" \
+		"Stage: <b>Sound Control Come Back!</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
-		"Under commit <b>$(git log --pretty=format:'"%h"' -1)</b>"
+		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
+# Clone Toolchain
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
 # git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
 
 # export CC=$PWD/Clang/bin/clang
 # export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
+# Install depth
 sudo apt install bc -y
 
+# Make Kernel
 make O=out vince-perf_defconfig -j64 || finerr
 make O=out -j64 || finerr
 
+# Calc Build Used Time
 export BUILD_END=$(date "+%s")
 export DIFF=$(($BUILD_END - $BUILD_START))
 
 export BUILD_TIME=$(date "+%Y%m%d-%H:%M:%S-$(git log --pretty=format:'%h' -1)")
 
+# Pack
 cp $IMG nito-ak2/
 cd nito-ak2/
 zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_TIME.zip" .
-echo "Flashable zip generated."
+md5sum Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_TIME.zip > "md5sum_$(git log --pretty=format:'%h' -1).txt"
 
-push
+# Push
+push_package
+push_md5sum
 cd ..
 fin
-
-echo "Build done!"
-
