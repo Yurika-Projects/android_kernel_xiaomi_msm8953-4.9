@@ -85,15 +85,15 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="r7.1 Rocky Bunnie"
-export ZIP_VERSION="r7.1"
+export VERSION_TG="r7.x World Vanquisher"
+export ZIP_VERSION="r7.x"
 export BUILD_TYPE="CI"
 
 # Telegram Stuff 
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Sound Control Come Back!</b>" \
+		"Stage: <b>Fix Earphone No Sound Bug</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
