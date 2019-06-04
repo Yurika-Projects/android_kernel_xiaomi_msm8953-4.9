@@ -232,10 +232,6 @@ static int tas2557_set_bias_level(struct snd_soc_codec *pCodec,
 	return 0;
 }
 
-#ifdef CONFIG_SOUND_CONTROL
-extern struct snd_soc_codec *codec;
-#endif
-
 static int tas2557_codec_probe(struct snd_soc_codec *pCodec)
 {
 	struct tas2557_priv *pTAS2557 = snd_soc_codec_get_drvdata(pCodec);

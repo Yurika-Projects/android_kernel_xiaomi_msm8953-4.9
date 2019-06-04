@@ -29,10 +29,6 @@ config SOUND_OSS_CORE
 	bool
 	default n
 
-config SOUND_CONTROL
-	bool
-	default y
-
 config SOUND_OSS_CORE_PRECLAIM
 	bool "Preclaim OSS device numbers"
 	depends on SOUND_OSS_CORE
