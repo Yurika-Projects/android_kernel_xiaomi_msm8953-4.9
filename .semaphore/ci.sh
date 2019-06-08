@@ -26,7 +26,7 @@ function push_package() {
 	     -F chat_id="$TELEGRAM_ID"
 }
 
-function push_ms5sum() {
+function push_md5sum() {
 	JIP="md5sum_$(git log --pretty=format:'%h' -1).txt"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 	     -F chat_id="$TELEGRAM_ID"
