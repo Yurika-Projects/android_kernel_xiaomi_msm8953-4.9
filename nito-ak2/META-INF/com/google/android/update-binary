@@ -75,7 +75,7 @@ fi;
 
 ui_print "##############################";
 ui_print "#                                   #";
-ui_print "#     $(file_getprop anykernel.sh kernel.string) #";
+ui_print "#     $(file_getprop anykernel.sh kernel.string)     #";
 ui_print "#                                   #";
 ui_print "##############################";
 if [ -f version ]; then
@@ -85,6 +85,7 @@ if [ -f version ]; then
   done < version;
   ui_print " ";
 fi;
+ui_print " ";
 ui_print "- Thx AnyKernel2 By @osm0sis";
 
 unmount_all;
@@ -155,7 +156,7 @@ if [ "$supported_ver" ]; then
   fi;
   if [ "$supported" ]; then
     ui_print "- Android SDK Version: $android_ver";
-    ui_print "- Supported Android Version.";
+    ui_print " ";
   else
     abort "! Android SDK Version: $android_ver";
     abort "! Unsupported Android Version. Aborting...";
