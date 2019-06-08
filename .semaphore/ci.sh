@@ -21,7 +21,7 @@ export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push_package() {
-	JIP="Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_TIME.zip"
+	JIP="Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 	     -F chat_id="$TELEGRAM_ID"
 }
@@ -93,7 +93,7 @@ export BUILD_TYPE="CI"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Fix Earphone No Sound Bug</b>" \
+		"Stage: <b>Sync Some Stuff</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
@@ -114,14 +114,13 @@ make O=out -j64 || finerr
 # Calc Build Used Time
 export BUILD_END=$(date "+%s")
 export DIFF=$(($BUILD_END - $BUILD_START))
-
-export BUILD_TIME=$(date "+%Y%m%d-%H:%M:%S-$(git log --pretty=format:'%h' -1)")
+export BUILD_POINT=$(git log --pretty=format:'%h' -1)
 
 # Pack
 cp $IMG nito-ak2/
 cd nito-ak2/
-zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_TIME.zip" .
-md5sum Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_TIME.zip > "md5sum_$(git log --pretty=format:'%h' -1).txt"
+zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
+md5sum Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).txt"
 
 # Push
 push_package
