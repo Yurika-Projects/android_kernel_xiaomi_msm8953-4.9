@@ -124,12 +124,14 @@ if [ "$(file_getprop anykernel.sh do.devicecheck)" == 1 ]; then
   product="$(getprop ro.build.product)";
   for testname in $(file_getprop anykernel.sh 'device.name.*'); do
     if [ "$device" == "$testname" -o "$product" == "$testname" ]; then
+      ui_print " ";
       ui_print "- Your device is: $testname";
       match=1;
       break;
     fi;
   done;
   if [ ! "$match" ]; then
+    abort " ";
     abort "! Your device is: $testname"
     abort "! Unsupported device. Aborting...";
     abort "! If it show this error, check your recovery first!"
@@ -138,6 +140,7 @@ fi;
 
 supported_ver="$(file_getprop anykernel.sh supported.versions | $bb tr -d '[:space:]')";
 if [ "$supported_ver" ]; then
+  ui_print " ";
   ui_print "- Checking Android version...";
   android_ver="$(file_getprop /system/build.prop ro.build.version.sdk)";
   if [ "$(echo $supported_ver | $bb grep -)" ]; then
@@ -156,13 +159,13 @@ if [ "$supported_ver" ]; then
   fi;
   if [ "$supported" ]; then
     ui_print "- Android SDK Version: $android_ver";
-    ui_print " ";
   else
     abort "! Android SDK Version: $android_ver";
     abort "! Unsupported Android Version. Aborting...";
   fi;
 fi;
 
+ui_print " ";
 ui_print "- Installing...";
 for i in $($bb --list); do
   $bb ln -s $bb bin/$i;
