@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=Nito Kernel Install
+kernel.string=Nite Kernel Install
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
