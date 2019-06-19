@@ -84,7 +84,7 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="rX Trident"
+export VERSION_TG="rX Lily"
 export ZIP_VERSION="rX"
 export BUILD_TYPE="REL"
  
