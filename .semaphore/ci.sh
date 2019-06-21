@@ -27,7 +27,7 @@ function push_package() {
 }
 
 function push_md5sum() {
-	JIP="md5sum_$(git log --pretty=format:'%h' -1).txt"
+	JIP="md5sum_$(git log --pretty=format:'%h' -1).md5sum"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 	     -F chat_id="$TELEGRAM_ID"
 }
@@ -120,7 +120,7 @@ export BUILD_POINT=$(git log --pretty=format:'%h' -1)
 cp $IMG nito-ak2/
 cd nito-ak2/
 zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
-md5sum Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).txt"
+md5sum Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
 
 # Push
 push_package
