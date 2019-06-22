@@ -93,7 +93,7 @@ export BUILD_TYPE="CI"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Haha Typo</b>" \
+		"Stage: <b>Introduce DSBoost</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
