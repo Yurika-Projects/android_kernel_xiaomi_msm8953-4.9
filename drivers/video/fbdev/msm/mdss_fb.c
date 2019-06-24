@@ -94,6 +94,13 @@ extern int LCM_effect[3];
 		out = (12*v*v+1393*v+3060)/4465;\
 		} while (0)
 
+bool backlight_dimmer = false;
+int backlight_min = 1;
+int backlight_max = 255;
+module_param(backlight_dimmer, bool, 0644);
+module_param(backlight_min, int, 0644);
+module_param(backlight_max, int, 0644);
+
 static struct fb_info *fbi_list[MAX_FBI_LIST];
 static int fbi_list_index;
 
@@ -335,6 +342,28 @@ static void mdss_fb_set_bl_brightness(struct led_classdev *led_cdev,
 	if (value > mfd->panel_info->brightness_max)
 		value = mfd->panel_info->brightness_max;
 
+	if (value != 0)
+	{
+		/* sanitize */
+		if (backlight_min < 1)
+			backlight_min = 1;
+		if (backlight_max < 255)
+			backlight_max= 255;
+
+		/* set limits */
+		if (value < backlight_min)
+			value = backlight_min;
+		if (value > backlight_max)
+			value = backlight_max;
+	}
+
+	if (backlight_dimmer) {
+		if(value < 3) {
+			bl_lvl = 1;
+		} else {
+			MDSS_BRIGHT_TO_BL_DIM(bl_lvl, value);
+		}
+	} else {
 	/* This maps android backlight level 0 to 255 into
 	 * driver backlight level 0 to bl_max with rounding
 	 */
