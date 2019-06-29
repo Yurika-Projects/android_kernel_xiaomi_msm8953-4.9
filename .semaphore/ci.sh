@@ -80,32 +80,28 @@ export DATE=`date`
 export BUILD_START=$(date "+%s")
 export ARCH=arm64
 export SUBARCH=arm64
-# export CLANG_TREPLE=aarch64-linux-gnu-
+export CLANG_TREPLE=aarch64-linux-gnu-
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Keternal"
-export KBUILD_BUILD_HOST="nt_smphore"
+export KBUILD_BUILD_HOST="Nito Kernel Builder"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export VERSION_TG="rXa Xrito Vollerei"
 export ZIP_VERSION="rXa"
 export BUILD_TYPE="CI"
 
 # Telegram Stuff 
-
-tg_channelcast "------------------------"
-
 tg_sendstick
-
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Do some tune</b>" \
+		"Stage: <b>Release</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
 # Clone Toolchain
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
-# git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
+git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
 
-# export CC=$PWD/Clang/bin/clang
-# export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
+export CC=$PWD/Clang/bin/clang
+export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
 # Install depth
 sudo apt install bc -y
