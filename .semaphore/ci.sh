@@ -96,7 +96,7 @@ tg_channelcast "------------------------"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Do some tune</b>" \
+		"Stage: <b>Merge camera commit from @laststandrighthere</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
