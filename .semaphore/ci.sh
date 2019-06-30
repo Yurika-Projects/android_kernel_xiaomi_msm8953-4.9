@@ -85,8 +85,8 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Keternal"
 export KBUILD_BUILD_HOST="nt_smphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="rXa Xrito Vollerei"
-export ZIP_VERSION="rXa"
+export VERSION_TG="rX2 Angel Refactor"
+export ZIP_VERSION="rX2"
 export BUILD_TYPE="CI"
 
 # Telegram Stuff 
