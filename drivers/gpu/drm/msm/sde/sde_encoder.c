@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2014-2019, The Linux Foundation. All rights reserved.
  * Copyright (C) 2013 Red Hat
  * Author: Rob Clark <robdclark@gmail.com>
  *
@@ -3094,19 +3094,22 @@ int sde_encoder_idle_request(struct drm_encoder *drm_enc)
 	return 0;
 }
 
-static void sde_encoder_off_work(struct kthread_work *work)
+int sde_encoder_get_ctlstart_timeout_state(struct drm_encoder *drm_enc)
 {
-	struct sde_encoder_virt *sde_enc = container_of(work,
-			struct sde_encoder_virt, delayed_off_work.work);
-	struct drm_encoder *drm_enc;
+	struct sde_encoder_virt *sde_enc = NULL;
+	int i, count = 0;
 
-	if (!sde_enc) {
-		SDE_ERROR("invalid sde encoder\n");
-		return;
+	if (!drm_enc)
+		return 0;
+
+	sde_enc = to_sde_encoder_virt(drm_enc);
+
+	for (i = 0; i < sde_enc->num_phys_encs; i++) {
+		count += atomic_read(&sde_enc->phys_encs[i]->ctlstart_timeout);
+		atomic_set(&sde_enc->phys_encs[i]->ctlstart_timeout, 0);
 	}
-	drm_enc = &sde_enc->base;
 
-	sde_encoder_idle_request(drm_enc);
+	return count;
 }
 
 /**
