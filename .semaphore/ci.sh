@@ -21,7 +21,7 @@ export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push_package() {
-	JIP="Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip"
+	JIP="Genom-Kernel-Reborn-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 	     -F chat_id="$TELEGRAM_ID"
 }
@@ -85,8 +85,8 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Keternal"
 export KBUILD_BUILD_HOST="nt_smphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="rX2 Angel Refactor"
-export ZIP_VERSION="rX2"
+export VERSION_TG="Reborn"
+export ZIP_VERSION="Reborn"
 export BUILD_TYPE="CI"
 
 # Telegram Stuff 
@@ -95,9 +95,9 @@ tg_channelcast "------------------------"
 
 tg_sendstick
 
-tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Replace to new KCAL Stuff</b>" \
-		"From <b>Nito Kernel Mainline</b>" \
+tg_channelcast "<b>Genom Kernel $VERSION_TG</b> new build!" \
+		"Stage: <b>NONSTAGE</b>" \
+		"From <b>Genom Kernel Reborn Slideline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
 # Clone Toolchain
@@ -122,8 +122,8 @@ export BUILD_POINT=$(git log --pretty=format:'%h' -1)
 # Pack
 cp $IMG nito-ak2/
 cd nito-ak2/
-zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
-md5sum Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
+zip -r9 -9 "Genom-Kernel-Reborn-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
+md5sum Genom-Kernel-Reborn-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
 
 # Push
 push_package
