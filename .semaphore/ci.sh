@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Nito CI Script v4.0
+# Modified for Genom Kernel
 # Copyright (C) 2019 urK -kernelaesthesia- (Z5X67280@163.com)
 # Copyright (C) 2019 Raphiel Rollerscaperers (raphielscape)
 # Copyright (C) 2019 Rama Bondan Prakoso (rama982) 
@@ -21,7 +22,7 @@ export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push_package() {
-	JIP="Genom-Kernel-Reborn-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip"
+	JIP="Genom-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 	     -F chat_id="$TELEGRAM_ID"
 }
@@ -97,7 +98,7 @@ tg_sendstick
 
 tg_channelcast "<b>Genom Kernel $VERSION_TG</b> new build!" \
 		"Stage: <b>NONSTAGE</b>" \
-		"From <b>Genom Kernel Reborn Slideline</b>" \
+		"From <b>Genom Kernel TeamNR Slideline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
 # Clone Toolchain
@@ -120,10 +121,10 @@ export DIFF=$(($BUILD_END - $BUILD_START))
 export BUILD_POINT=$(git log --pretty=format:'%h' -1)
 
 # Pack
-cp $IMG nito-ak2/
-cd nito-ak2/
-zip -r9 -9 "Genom-Kernel-Reborn-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
-md5sum Genom-Kernel-Reborn-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
+cp $IMG AnyKernel2/
+cd AnyKernel2/
+zip -r9 -9 "Genom-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
+md5sum Genom-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
 
 # Push
 push_package
