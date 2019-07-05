@@ -96,7 +96,7 @@ tg_channelcast "------------------------"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Merge Latest CAF Tag</b>" \
+		"Stage: <b>Do Some Optimize</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
