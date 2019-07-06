@@ -84,8 +84,8 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="urK -kernelaesthesia-"
 export KBUILD_BUILD_HOST="-buildaesthesia- Semaphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="rX Lily"
-export ZIP_VERSION="rX"
+export VERSION_TG="rX2 Cyberangel"
+export ZIP_VERSION="rX2"
 export BUILD_TYPE="REL"
  
 # Telegram Stuff 
@@ -93,7 +93,7 @@ tg_sendstick
  
 tg_channelcast "<b>Nite Kernel $VERSION_TG</b> new build!" \
 		"Stage: <b>Sync Stuff</b>" \
-		"From <b>Nito Kernel Lite Sildeline</b>" \
+		"From <b>Nite Kernel Sildeline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
  
 # Clone Toolchain
@@ -126,4 +126,3 @@ push_package
 push_md5sum
 cd ..
 fin
- 
