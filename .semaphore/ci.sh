@@ -85,9 +85,9 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Keternal"
 export KBUILD_BUILD_HOST="nt_smphore"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="rX2 Angel Refactor"
+export VERSION_TG="rX2 Cyberangel"
 export ZIP_VERSION="rX2"
-export BUILD_TYPE="CI"
+export BUILD_TYPE="REL"
 
 # Telegram Stuff 
 
@@ -102,10 +102,10 @@ tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
 
 # Clone Toolchain
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
-# git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
+git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
 
-# export CC=$PWD/Clang/bin/clang
-# export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
+export CC=$PWD/Clang/bin/clang
+export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
 # Install depth
 sudo apt install bc -y
