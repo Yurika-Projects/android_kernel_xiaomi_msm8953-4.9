@@ -66,8 +66,8 @@ function fin() {
 # Errored prober
 function finerr() {
 	tg_channelcast "<b>Build fail...</b>" \
+	"Used $(($DIFF / 60)) min $(($DIFF % 60)) sec." \
 	"Check build log to fix compile error!"
-	export SEMAPHORE_JOB_RESULT=failed
 	exit 1
 }
 
@@ -91,7 +91,7 @@ export BUILD_TYPE="REL"
 
 # Telegram Stuff 
 
-tg_channelcast "###########"
+tg_channelcast "------------------------"
 
 tg_sendstick
 
