@@ -74,9 +74,9 @@ if [ -f banner ]; then
 fi;
 
 ui_print "##############################";
-ui_print "#                                   #";
-ui_print "#     $(file_getprop anykernel.sh kernel.string)     #";
-ui_print "#                                   #";
+ui_print " ";
+ui_print " $(file_getprop anykernel.sh kernel.string) ";
+ui_print " ";
 ui_print "##############################";
 if [ -f version ]; then
   ui_print " ";
@@ -119,22 +119,21 @@ elif [ ! "$(getprop ro.product.device 2>/dev/null)" -a ! "$(getprop ro.build.pro
 fi;
 
 if [ "$(file_getprop anykernel.sh do.devicecheck)" == 1 ]; then
+  ui_print " ";
   ui_print "- Checking device...";
   device="$(getprop ro.product.device)";
   product="$(getprop ro.build.product)";
   for testname in $(file_getprop anykernel.sh 'device.name.*'); do
     if [ "$device" == "$testname" -o "$product" == "$testname" ]; then
-      ui_print " ";
       ui_print "- Your device is: $testname";
       match=1;
       break;
     fi;
   done;
   if [ ! "$match" ]; then
-    abort " ";
     abort "! Your device is: $testname"
     abort "! Unsupported device. Aborting...";
-    abort "! If it show this error, check your recovery first!"
+    abort "! If show on this error, check your recovery first!"
   fi;
 fi;
 
@@ -222,4 +221,5 @@ test "$savedpre" && export LD_PRELOAD="$savedpre";
 
 unmount_all;
 
+ui_print " ";
 ui_print "- Done!";
