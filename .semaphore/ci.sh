@@ -96,7 +96,7 @@ tg_channelcast "------------------------"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Introduce New CPU Freq Table</b>" \
+		"Stage: <b>Limit 2.2GHz CPU</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
