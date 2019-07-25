@@ -96,7 +96,7 @@ tg_channelcast "------------------------"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Limit 2.2GHz CPU</b>" \
+		"Stage: <b>Merge 4.9.186</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
