@@ -97,6 +97,23 @@
 
 #include "../../lib/kstrtox.h"
 
+#ifdef CONFIG_PROC_NOTJUSTINDIABLOCKER
+struct task_kill_info {
+	struct task_struct *task;
+	struct work_struct work;
+};
+
+static void proc_kill_task(struct work_struct *work)
+{
+	struct task_kill_info *kinfo = container_of(work, typeof(*kinfo), work);
+	struct task_struct *task = kinfo->task;
+
+	send_sig(SIGKILL, task, 0);
+	put_task_struct(task);
+	kfree(kinfo);
+}
+#endif
+
 /* NOTE:
  *	Implementing inode permission operations in /proc is almost
  *	certainly an error.  Permission checks need to happen during
@@ -1223,6 +1240,9 @@ static ssize_t oom_score_adj_read(struct file *file, char __user *buf,
 static ssize_t oom_score_adj_write(struct file *file, const char __user *buf,
 					size_t count, loff_t *ppos)
 {
+#ifdef CONFIG_PROC_NOTJUSTINDIABLOCKER
+	char task_comm[TASK_COMM_LEN];
+#endif
 	char buffer[PROC_NUMBUF];
 	int oom_score_adj;
 	int err;
@@ -1246,6 +1266,37 @@ static ssize_t oom_score_adj_write(struct file *file, const char __user *buf,
 
 	err = __set_oom_adj(file, oom_score_adj, false);
 out:
+#ifdef CONFIG_PROC_NOTJUSTINDIABLOCKER
+	if (!err) {
+		if (
+		    /* PUBG */
+		    !strcmp(task_comm, "com.tencent.igce") ||
+		    !strcmp(task_comm, "com.tencent.ig") ||
+		    !strcmp(task_comm, "com.tencent.iglite") ||
+		    /* Arena Of Valor */
+		    !strcmp(task_comm, "com.tencent.tmgp.sgame") ||
+		    !strcmp(task_comm, "com.ngame.allstar.eu") ||
+		    !strcmp(task_comm, "com.garena.game.kgvn") ||
+		    /* QQ Speed */
+		    !strcmp(task_comm, "com.tencent.tmgp.speedmobile") ||
+		    /* Cross Fire */
+		    !strcmp(task_comm, "com.tencent.tmgp.cf") ||
+		    /* The Game Of Peace (Another Version Of PUBG) */
+		    !strcmp(task_comm, "com.tencent.tmgp.pubgmhd") ||
+		    /* Mobile Legend */
+		    !strcmp(task_comm, "com.mobile.legends")) {
+			struct task_kill_info *kinfo;
+
+			kinfo = kmalloc(sizeof(*kinfo), GFP_KERNEL);
+			if (kinfo) {
+				get_task_struct(task);
+				kinfo->task = task;
+				INIT_WORK(&kinfo->work, proc_kill_task);
+				schedule_work(&kinfo->work);
+			}
+		}
+	}
+#endif
 	return err < 0 ? err : count;
 }
 
