@@ -1510,35 +1510,35 @@ config CPUSETS_ASSIST
 
 	  If unsure, say N.
 
-if CPUSET_ASSIST
+if CPUSETS_ASSIST
 
 config CPUSET_AUDIO_APP
 	string "Value for 'audio-app' cpuset"
-	default "0-3"
+	default "1-2"
 	help
 	  The CPU mask to use for the audio-app cpuset.
 
 config CPUSET_BG
 	string "Value for 'background' cpuset"
-	default "0-1"
+	default "0-3"
 	help
 	  The CPU mask to use for the audio-app cpuset.
 
 config CPUSET_CAMERA
 	string "Value for 'camera-daemon' cpuset"
-	default "0-3,6-7"
+	default "4-7"
 	help
 	  The CPU mask to use for the audio-app cpuset.
 
 config CPUSET_FG
 	string "Value for 'foreground' cpuset"
-	default "0-3,6-7"
+	default "0-7"
 	help
 	  The CPU mask to use for the audio-app cpuset.
 
 config CPUSET_RESTRICTED
 	string "Value for 'restricted' cpuset"
-	default "0-3"
+	default "0-7"
 	help
 	  The CPU mask to use for the audio-app cpuset.
 
