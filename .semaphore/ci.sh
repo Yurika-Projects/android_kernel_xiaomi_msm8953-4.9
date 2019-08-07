@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Nito CI Script v4.0
-# Copyright (C) 2019 urK -kernelaesthesia- (Z5X67280@163.com)
+# Nitro CI Script version Final
+# Copyright (C) 2019 Keternal (Z5X67280@163.com)
 # Copyright (C) 2019 Raphiel Rollerscaperers (raphielscape)
 # Copyright (C) 2019 Rama Bondan Prakoso (rama982) 
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -21,7 +21,7 @@ export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push_package() {
-	JIP="Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip"
+	JIP="Nitro-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 	     -F chat_id="$TELEGRAM_ID"
 }
@@ -82,12 +82,12 @@ export ARCH=arm64
 export SUBARCH=arm64
 # export CLANG_TREPLE=aarch64-linux-gnu-
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
-export KBUILD_BUILD_USER="Keternal"
-export KBUILD_BUILD_HOST="nt_smphore"
+export KBUILD_BUILD_USER="The Herrscher Of Reason"
+export KBUILD_BUILD_HOST="TNR Semaphore E1-8"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="rXd Heavensdoor"
-export ZIP_VERSION="rXd"
-export BUILD_TYPE="CI"
+export VERSION_TG="Ringed Genesis"
+export ZIP_VERSION="ZERO"
+export BUILD_TYPE="REL"
 
 # Telegram Stuff 
 
@@ -95,9 +95,9 @@ tg_channelcast "------------------------"
 
 tg_sendstick
 
-tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Merge Adreno Idler into Mainline</b>" \
-		"From <b>Nito Kernel Mainline</b>" \
+tg_channelcast "<b>Nitro Kernel $VERSION_TG</b> new build!" \
+		"Stage: <b>Goodnight.</b>" \
+		"From <b>Nitro Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
 # Clone Toolchain
@@ -122,8 +122,8 @@ export BUILD_POINT=$(git log --pretty=format:'%h' -1)
 # Pack
 cp $IMG nito-ak2/
 cd nito-ak2/
-zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
-md5sum Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
+zip -r9 -9 "Nitro-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
+md5sum Nitro-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
 
 # Push
 push_package
