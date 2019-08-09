@@ -1399,15 +1399,15 @@ config SCHED_TUNE
 
 	  If unsure, say N.
 
-config DYNAMIC_STUNE_BOOST
-	bool "Dynamic SchedTune boosting support"
+config STUNE_ASSIST
+	bool "SchedTune configuration helper"
 	depends on SCHED_TUNE
+	depends on ANDROID
 	help
-	  This option extends the SchedTune framework and provides APIs to
-	  activate and reset SchedTune boosting from anywhere in the kernel.
+	  This option enables in-kernel overrides for SchedTune values.
 
 	  If unsure, say N.
-	  
+
 config CPUSET_ASSIST
 	bool "CPUSet configuration helper"
 	depends on CPUSETS
@@ -1418,16 +1418,14 @@ config CPUSET_ASSIST
 
 	  If unsure, say N.
 
-config STUNE_ASSIST
-	bool "Helper for setting up stune values from kernel"
-	depends on CGROUP_SCHEDTUNE
-	depends on ANDROID
+config DYNAMIC_STUNE_BOOST
+	bool "Dynamic SchedTune boosting support"
+	depends on SCHED_TUNE && CGROUP_SCHEDTUNE
 	help
-	  This option allows you to control which default settings you want
-	  to use for schedtune without need for ramdisk modifications
-	  (e.g. prefer_idle and boost values).
+	  This option extends the SchedTune framework and provides APIs to
+	  activate and reset SchedTune boosting from anywhere in the kernel.
 
-	  Say N if unsure.
+	  If unsure, say N.
 
 config DEFAULT_USE_ENERGY_AWARE
 	bool "Default to enabling the Energy Aware Scheduler feature"
