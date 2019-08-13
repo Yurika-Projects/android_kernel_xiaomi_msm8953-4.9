@@ -96,7 +96,7 @@ tg_channelcast "------------------------"
 tg_sendstick
 
 tg_channelcast "<b>Nitro Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Goodnight.</b>" \
+		"Stage: <b>Fix Bug</b>" \
 		"From <b>Nitro Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
