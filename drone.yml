@@ -10,7 +10,7 @@ clone:
  
 steps:
   - name: nito
-    image: ubuntu:latest
+    image: kdrag0n/debian-kbuild:buster
     commands:
       - chmod +x .semaphore/ci.sh
       - ./.semaphore/ci.sh
@@ -19,7 +19,7 @@ steps:
         - 9.0-caf-upstream
 
   - name: genom_unofficial
-    image: ubuntu:latest
+    image: kdrag0n/debian-kbuild:buster
     commands:
       - chmod +x .semaphore/ci.sh
       - ./.semaphore/ci.sh
