@@ -1,0 +1,28 @@
+kind: pipeline
+name: nito_kernel_build_pineline
+ 
+platform:
+  os: linux
+  arch: amd64
+ 
+clone:
+  depth: 1
+ 
+steps:
+  - name: nito
+    image: ubuntu:latest
+    commands:
+      - chmod +x .semaphore/ci.sh
+      - ./.semaphore/ci.sh
+    when:
+      branch:
+        - 9.0-caf-upstream
+
+  - name: genom_unofficial
+    image: ubuntu:latest
+    commands:
+      - chmod +x .semaphore/ci.sh
+      - ./.semaphore/ci.sh
+    when:
+      branch:
+        - genom_reborn
