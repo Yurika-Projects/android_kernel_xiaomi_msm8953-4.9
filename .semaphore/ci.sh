@@ -91,12 +91,12 @@ export BUILD_TYPE="REL"
 
 # Telegram Stuff 
 
-tg_channelcast "------------------------"
+tg_channelcast "#########################"
 
 tg_sendstick
 
 tg_channelcast "<b>Nitro Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Improve Stability</b>" \
+		"Stage: <b>Merge Tags</b>" \
 		"From <b>Nitro Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
