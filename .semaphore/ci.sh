@@ -83,7 +83,7 @@ export SUBARCH=arm64
 export CLANG_TREPLE=aarch64-linux-gnu-
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="The Herrscher Of Reason"
-export KBUILD_BUILD_HOST="TNR Semaphore E1-8"
+export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export VERSION_TG="Ringed Genesis"
 export ZIP_VERSION="ZERO"
@@ -96,7 +96,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nitro Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Merge Tags</b>" \
+		"Stage: <b>First Build On Drone</b>" \
 		"From <b>Nitro Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
@@ -111,8 +111,8 @@ export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*
 sudo apt install bc -y
 
 # Make Kernel
-make O=out vince-perf_defconfig -j64 || finerr
-make O=out -j64 || finerr
+make O=out vince-perf_defconfig -j$(grep -c '^processor' /proc/cpuinfo) || finerr
+make O=out -j$(grep -c '^processor' /proc/cpuinfo) || finerr
 
 # Calc Build Used Time
 export BUILD_END=$(date "+%s")
