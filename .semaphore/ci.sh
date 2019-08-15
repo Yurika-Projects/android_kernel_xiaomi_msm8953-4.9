@@ -83,8 +83,8 @@ export ARCH=arm64
 export SUBARCH=arm64
 export CLANG_TREPLE=aarch64-linux-gnu-
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
-export KBUILD_BUILD_USER="Keternal"
-export KBUILD_BUILD_HOST="nt_smphore"
+export KBUILD_BUILD_USER="The Librater"
+export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 export VERSION_TG="AOSP UNOFFICIAL"
 export ZIP_VERSION="AOSP"
@@ -112,8 +112,8 @@ export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*
 sudo apt install bc -y
 
 # Make Kernel
-make O=out vince-perf_defconfig -j64 || finerr
-make O=out -j64 || finerr
+make O=out vince-perf_defconfig -j$(grep -c '^processor' /proc/cpuinfo) || finerr
+make O=out -j$(grep -c '^processor' /proc/cpuinfo) || finerr
 
 # Calc Build Used Time
 export BUILD_END=$(date "+%s")
