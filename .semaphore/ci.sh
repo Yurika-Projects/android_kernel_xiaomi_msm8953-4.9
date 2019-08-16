@@ -102,8 +102,8 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Optimize GPU Heat</b>" \
-		"From <b>Nitro Kernel Mainline</b>" \
+		"Stage: <b>Release</b>" \
+		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
 # Clone Toolchain
