@@ -120,8 +120,8 @@ export DIFF=$(($BUILD_END - $BUILD_START))
 export BUILD_POINT=$(git log --pretty=format:'%h' -1)
 
 # Pack
-cp $IMG nito-ak2/
-cd nito-ak2/
+cp $IMG nito-ak3/
+cd nito-ak3/
 zip -r9 -9 "Nitro-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
 md5sum Nitro-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
 
