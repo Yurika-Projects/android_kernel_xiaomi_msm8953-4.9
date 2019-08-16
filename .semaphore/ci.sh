@@ -32,6 +32,12 @@ function push_md5sum() {
 	     -F chat_id="$TELEGRAM_ID"
 }
 
+function push_dtb() {
+        JIP="out/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb"
+        curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
+             -F chat_id="$TELEGRAM_ID"
+}
+
 # Send the info up
 function tg_channelcast() {
 	"${TELEGRAM}" -c ${TELEGRAM_ID} -H \
@@ -129,4 +135,5 @@ md5sum Nitro-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git l
 push_package
 push_md5sum
 cd ..
+push_dtb
 fin
