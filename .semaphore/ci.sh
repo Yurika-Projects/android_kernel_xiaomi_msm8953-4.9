@@ -135,5 +135,5 @@ md5sum Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git lo
 push_package
 push_md5sum
 cd ..
-push_dtb
+# push_dtb
 fin
