@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Nitro CI Script version Final
+# Nitro CI Script
 # Copyright (C) 2019 Keternal (Z5X67280@163.com)
 # Copyright (C) 2019 Raphiel Rollerscaperers (raphielscape)
 # Copyright (C) 2019 Rama Bondan Prakoso (rama982) 
@@ -21,7 +21,7 @@ export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push_package() {
-	JIP="Nitro-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip"
+	JIP="Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip"
 	curl -F document=@$JIP  "https://api.telegram.org/bot$BOT_API_KEY/sendDocument" \
 	     -F chat_id="$TELEGRAM_ID"
 }
@@ -88,11 +88,11 @@ export ARCH=arm64
 export SUBARCH=arm64
 export CLANG_TREPLE=aarch64-linux-gnu-
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
-export KBUILD_BUILD_USER="The Herrscher Of Reason"
+export KBUILD_BUILD_USER="Falling Star"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="Ringed Genesis"
-export ZIP_VERSION="ZERO"
+export VERSION_TG="rXe Sunset Radience"
+export ZIP_VERSION="rXe"
 export BUILD_TYPE="REL"
 
 # Telegram Stuff 
@@ -101,7 +101,7 @@ tg_channelcast "#########################"
 
 tg_sendstick
 
-tg_channelcast "<b>Nitro Kernel $VERSION_TG</b> new build!" \
+tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
 		"Stage: <b>Optimize GPU Heat</b>" \
 		"From <b>Nitro Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
@@ -128,8 +128,8 @@ export BUILD_POINT=$(git log --pretty=format:'%h' -1)
 # Pack
 cp $IMG nito-ak3/
 cd nito-ak3/
-zip -r9 -9 "Nitro-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
-md5sum Nitro-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
+zip -r9 -9 "Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
+md5sum Nito-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
 
 # Push
 push_package
