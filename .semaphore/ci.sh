@@ -72,7 +72,6 @@ function fin() {
 # Errored prober
 function finerr() {
 	tg_channelcast "<b>Build fail...</b>" \
-	"Used $(($DIFF / 60)) min $(($DIFF % 60)) sec." \
 	"Check build log to fix compile error!"
 	exit 1
 }
