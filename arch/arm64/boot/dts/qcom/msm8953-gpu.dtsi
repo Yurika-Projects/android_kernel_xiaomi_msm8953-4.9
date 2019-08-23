@@ -178,7 +178,7 @@
 			compatible = "qcom,gpu-pwrlevels";
 
             qcom,gpu-pwrlevel@0 {
-                reg = <0>
+                reg = <0>;
                 qcom,gpu-freq = <765000000>;
 				qcom,bus-freq = <10>;
 				qcom,bus-min = <10>;
