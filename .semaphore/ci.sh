@@ -101,7 +101,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Sync some stuff</b>" \
+		"Stage: <b>Refactor from 3145bec5a94</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
@@ -111,9 +111,6 @@ git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth
 
 export CC=$PWD/Clang/bin/clang
 export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
-
-# Install depth
-sudo apt install bc -y
 
 # Make Kernel
 make O=out vince-perf_defconfig -j$(grep -c '^processor' /proc/cpuinfo) || finerr
