@@ -87,11 +87,11 @@ export ARCH=arm64
 export SUBARCH=arm64
 export CLANG_TREPLE=aarch64-linux-gnu-
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
-export KBUILD_BUILD_USER="Falling Star"
+export KBUILD_BUILD_USER="Perfect"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="rXe Sunset Radience"
-export ZIP_VERSION="rXe"
+export VERSION_TG="rXF Pictured as Perfect"
+export ZIP_VERSION="rXF"
 export BUILD_TYPE="REL"
 
 # Telegram Stuff 
@@ -101,7 +101,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Refactor from 3145bec5a94</b>" \
+		"Stage: <b>PERFECT</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
