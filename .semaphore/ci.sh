@@ -86,9 +86,9 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="The Librater"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="AOSP UNOFFICIAL"
-export ZIP_VERSION="AOSP"
-export BUILD_TYPE="CI"
+export VERSION_TG="UNOFFICIAL"
+export ZIP_VERSION="KET"
+export BUILD_TYPE="REL"
 
 # Telegram Stuff 
 
@@ -97,7 +97,7 @@ tg_channelcast "###########"
 tg_sendstick
 
 tg_channelcast "<b>Genom Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>NONSTAGE</b>" \
+		"Stage: <b>Release</b>" \
 		"From <b>Genom Kernel TeamNR Slideline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
