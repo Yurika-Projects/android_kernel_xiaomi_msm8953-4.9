@@ -121,8 +121,8 @@ export DIFF=$(($BUILD_END - $BUILD_START))
 export BUILD_POINT=$(git log --pretty=format:'%h' -1)
 
 # Pack
-cp $IMG AnyKernel3/
-cd AnyKernel3/
+cp $IMG Anykernel3/
+cd Anykernel3/
 zip -r9 -9 "Genom-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip" .
 md5sum Genom-Kernel-$ZIP_VERSION-$BUILD_TYPE-$BUILD_POINT.zip >> "md5sum_$(git log --pretty=format:'%h' -1).md5sum"
 
