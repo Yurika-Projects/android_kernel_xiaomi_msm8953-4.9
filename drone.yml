@@ -26,3 +26,12 @@ steps:
     when:
       branch:
         - genom_reborn
+  
+  - name: nito_10
+    image: kdrag0n/debian-kbuild:buster
+    commands:
+      - chmod +x .semaphore/ci.sh
+      - ./.semaphore/ci.sh
+    when:
+      branch:
+        - 10-caf-upstream
