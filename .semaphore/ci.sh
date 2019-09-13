@@ -90,8 +90,8 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Perfect"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="rXF Pictured as Perfect"
-export ZIP_VERSION="rXF"
+export VERSION_TG="rXF Pictured as Perfect with Android 10"
+export ZIP_VERSION="rXF-10"
 export BUILD_TYPE="CI"
 
 # Telegram Stuff 
@@ -101,8 +101,8 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Linux 4.9.192 & Energy Model Backport</b>" \
-		"From <b>Nito Kernel Mainline</b>" \
+		"Stage: <b>Support Android 10 (Experimental)</b>" \
+		"From <b>Nito Kernel Android 10 Slideline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
 # Clone Toolchain
