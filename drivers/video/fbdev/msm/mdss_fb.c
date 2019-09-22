@@ -56,6 +56,10 @@
 #include "mdp3_ctrl.h"
 #include "mdss_sync.h"
 
+#ifdef CONFIG_KLAPSE
+#include <linux/klapse.h>
+#endif
+
 extern struct mdss_dsi_ctrl_pdata *change_par_ctrl ;
 extern int change_par_buf;
 #ifdef CONFIG_PROJECT_VINCE
