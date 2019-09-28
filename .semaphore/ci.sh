@@ -90,7 +90,7 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Perfect"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="rXF UP1 Bronze"
+export VERSION_TG="rXF UP2 Silver"
 export ZIP_VERSION="rXF"
 export BUILD_TYPE="REL"
 
@@ -101,7 +101,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Linux 4.9.193 / Tune Energy Model</b>" \
+		"Stage: <b>Uprev</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
