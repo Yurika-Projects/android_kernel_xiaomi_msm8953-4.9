@@ -101,7 +101,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Disable Energy Model</b>" \
+		"Stage: <b>Increase default Max Charging Current</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
