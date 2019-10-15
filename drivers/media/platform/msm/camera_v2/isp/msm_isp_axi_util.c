@@ -3451,6 +3451,13 @@ static int msm_isp_request_frame(struct vfe_device *vfe_dev,
 	if ((frame_src == VFE_PIX_0) && !stream_info->undelivered_request_cnt &&
 		MSM_VFE_STREAM_STOP_PERIOD !=
 		stream_info->activated_framedrop_period) {
+		/* wm is reloaded if undelivered_request_cnt is zero.
+		 * As per the hw behavior wm should be disabled or skip writing
+		 * before reload happens other wise wm could start writing from
+		 * middle of the frame and could result in image corruption.
+		 * instead of dropping frame in this error scenario use
+		 * drop_reconfig flag to process the request in next sof.
+		 */
 		pr_debug("%s:%d vfe %d frame_id %d prev_pattern %x stream_id %x\n",
 			__func__, __LINE__, vfe_dev->pdev->id, frame_id,
 			stream_info->activated_framedrop_period,
