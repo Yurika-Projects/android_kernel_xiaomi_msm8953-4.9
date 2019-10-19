@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 4.9.194 Kernel Configuration
+# Linux/arm64 4.9.196 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -4959,6 +4959,7 @@ CONFIG_CRYPTO_LZO=y
 # CONFIG_CRYPTO_842 is not set
 CONFIG_CRYPTO_LZ4=y
 CONFIG_CRYPTO_LZ4HC=y
+CONFIG_CRYPTO_ZSTD=y
 
 #
 # Random Number Generation
