@@ -96,7 +96,7 @@ export BUILD_TYPE="STABLE"
 
 # Install depth for Semaphore
 
-sudo apt install bc -y
+# sudo apt install bc -y
 
 # Telegram Stuff 
 
@@ -105,7 +105,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Stable Build</b>" \
+		"Stage: <b>Linux 4.9.197 / Zstandard Compress Algorithm From LA.UM.8.6.2.r1-04700-89xx.0</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
