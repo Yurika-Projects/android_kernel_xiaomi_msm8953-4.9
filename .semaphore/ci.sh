@@ -105,7 +105,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Linux 4.9.197 / Zstandard Compress Algorithm From LA.UM.8.6.2.r1-04700-89xx.0</b>" \
+		"Stage: <b>Update Drivers</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
