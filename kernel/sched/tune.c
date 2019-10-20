@@ -1130,7 +1130,7 @@ static struct schedtune *stune_get_by_name(char *st_name)
 		struct schedtune *st = allocated_group[idx];
 
 		if (!st) {
-			pr_warn("schedtune: could not find %s\n", st_name);
+			pr_debug("schedtune: could not find %s\n", st_name);
 			break;
 		}
 
