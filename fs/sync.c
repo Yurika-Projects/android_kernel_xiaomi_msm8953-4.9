@@ -19,7 +19,7 @@
 #include "internal.h"
 
 bool fsync_enabled = true;
-module_param(fsync_enabled, bool, 0755);
+module_param(fsync_enabled, bool, 0644);
 
 #ifdef CONFIG_DYNAMIC_FSYNC
 #include <linux/dyn_sync_cntrl.h>
