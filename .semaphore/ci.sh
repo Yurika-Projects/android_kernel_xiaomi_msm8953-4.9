@@ -105,6 +105,8 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast	"<b>Testing Build</b>" \
+		"If you want try it in Android 10, manual change AK3 script" \
+		"I am not sure it can boot or not, so please backup your boot" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
 # Clone Toolchain
