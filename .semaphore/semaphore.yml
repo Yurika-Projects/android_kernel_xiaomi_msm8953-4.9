@@ -1,0 +1,15 @@
+version: v1.0
+name: Fak Nito Kernel
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: "Fak Kernel"
+    task:
+      jobs:
+      - name: Compile Kernel
+        commands:
+          - checkout
+          - chmod +x .semaphore/ci.sh
+          - ./.semaphore/ci.sh
