@@ -1,0 +1,19 @@
+kind: pipeline
+name: nito_kernel_build_pineline
+ 
+platform:
+  os: linux
+  arch: amd64
+ 
+clone:
+  depth: 1
+ 
+steps:
+  - name: nito_10
+    image: kdrag0n/debian-kbuild:buster
+    commands:
+      - chmod +x .semaphore/ci.sh
+      - ./.semaphore/ci.sh
+    when:
+      branch:
+        - kernel.lnx.4.9.r27-rel
