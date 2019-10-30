@@ -105,7 +105,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Initial Build</b>" \
+		"Stage: <b>Build</b>" \
 		"From <b>Nito Kernel Android 10 Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
