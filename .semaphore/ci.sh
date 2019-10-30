@@ -90,9 +90,9 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Perfect"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="r17 ShadowShine"
-export ZIP_VERSION="TEST"
-export BUILD_TYPE="TEST"
+export VERSION_TG="r17 for Android 10"
+export ZIP_VERSION="R17"
+export BUILD_TYPE="CI"
 
 # Install depth for Semaphore
 
@@ -104,8 +104,9 @@ tg_channelcast "#########################"
 
 tg_sendstick
 
-tg_channelcast	"<b>Kernel Base for Android 10</b>" \
-		"I am not sure it can boot or not, so please backup your boot" \
+tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
+		"Stage: <b>Initial Build</b>" \
+		"From <b>Nito Kernel Android 10 Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
 # Clone Toolchain

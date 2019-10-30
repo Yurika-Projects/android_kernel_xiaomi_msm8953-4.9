@@ -16,4 +16,4 @@ steps:
       - ./.semaphore/ci.sh
     when:
       branch:
-        - kernel.lnx.4.9.r27-rel
+        - 10-rebased
