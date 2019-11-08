@@ -196,6 +196,7 @@ if [ "$supported_ver" ]; then
     ui_print "- Android SDK Version: $android_ver";
   else
     ui_print "! Android SDK Version: $android_ver";
+    ui_print "! This kernel is only support Android 10!";
     abort "! Unsupported Android SDK Version. Aborting...";
   fi;
 fi;
