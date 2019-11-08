@@ -90,8 +90,8 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Perfect"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="r17 ShadowShine"
-export ZIP_VERSION="r17"
+export VERSION_TG="M********* P*******"
+export ZIP_VERSION="r18"
 export BUILD_TYPE="CI"
 
 # Install depth for Semaphore
@@ -105,7 +105,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Optimize</b>" \
+		"Stage: <b>?</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
