@@ -90,8 +90,8 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Perfect"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="r17 for Android 10"
-export ZIP_VERSION="R17"
+export VERSION_TG="Monochrome Princess 10"
+export ZIP_VERSION="R18"
 export BUILD_TYPE="CI"
 
 # Install depth for Semaphore
