@@ -90,7 +90,7 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Perfect"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="M********* P*******"
+export VERSION_TG="Monochrome Princess"
 export ZIP_VERSION="r18"
 export BUILD_TYPE="CI"
 
