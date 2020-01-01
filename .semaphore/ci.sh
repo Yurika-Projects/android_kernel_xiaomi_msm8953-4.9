@@ -80,16 +80,31 @@ function finerr() {
 # Telegram FUNCTION end
 #
 
-# Build Env
+# Build Enviroment
+
+# Build Time Setup
 export DATE=`date`
 export BUILD_START=$(date "+%s")
+
+# Basic Setup
 export ARCH=arm64
 export SUBARCH=arm64
-export CLANG_TREPLE=aarch64-linux-gnu-
+
+# Clang Setup
+# export CLANG_TREPLE=aarch64-linux-gnu-
+
+# Cross Compiler Setup
 export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
+export CROSS_COMPILE_ARM32="$PWD/Toolchain-32/bin/arm-opt-linux-androideabi-"
+
+# Customize Build Host and User
 export KBUILD_BUILD_USER="Perfect"
 export KBUILD_BUILD_HOST="TNR Drone"
+
+# Defind Kernel Binary
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
+
+# Used for Telegram
 export VERSION_TG="Monochrome Princess"
 export ZIP_VERSION="r18"
 export BUILD_TYPE="CI"
@@ -111,10 +126,10 @@ tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
 
 # Clone Toolchain
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
-git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
+git clone https://github.com/krasCGQ/arm-linux-androideabi -b opt-gnu-9.x --depth=1 Toolchain-32
 
-export CC=$PWD/Clang/bin/clang
-export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
+# Customize Compiler Name
+# export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
 
 # Make Kernel
 make O=out vince-perf_defconfig -j$(grep -c '^processor' /proc/cpuinfo) || finerr
