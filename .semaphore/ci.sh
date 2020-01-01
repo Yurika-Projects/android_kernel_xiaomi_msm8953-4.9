@@ -126,7 +126,7 @@ tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
 
 # Clone Toolchain
 git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
-git clone https://github.com/krasCGQ/arm-linux-androideabi -b opt-gnu-9.x --depth=1 Toolchain-32
+git clone https://github.com/krasCGQ/arm-linux-androideabi -b opt-gnu-8.x --depth=1 Toolchain-32
 
 # Customize Compiler Name
 # export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
