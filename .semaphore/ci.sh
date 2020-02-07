@@ -66,7 +66,8 @@ function tg_sendstick() {
 # Fin prober
 function fin() {
 	tg_channelcast "<b>Build done!</b>" \
-	"Use $(($DIFF / 60)) min $(($DIFF % 60)) sec!"
+	"Use $(($DIFF / 60)) min $(($DIFF % 60)) sec!" \
+	"Make sure you are using Magisk 20.3+!"
 }
 
 # Errored prober
