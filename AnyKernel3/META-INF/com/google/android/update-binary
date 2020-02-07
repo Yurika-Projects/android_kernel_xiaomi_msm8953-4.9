@@ -312,6 +312,7 @@ do_modules() {
     ui_print "- Your kernel flasher selected system-less mode."
     ui_print "- Creating Kernel Helper Magisk module...";
     ui_print "- Make sure you are using Magisk 20.3+!";
+    ui_print " ";
     if [ -d /data/adb/magisk -a -f $AKHOME/split_img/.magisk ]; then
       umask=$(umask);
       umask 022;
@@ -398,7 +399,7 @@ KERNEL_STRING="$(file_getprop anykernel.sh kernel.string)";
 ui_print " ";
 ui_print "################################ ";
 ui_print " ";
-ui_print "	$KERNEL_STRING	";
+ui_print "        $KERNEL_STRING";
 ui_print " ";
 ui_print "################################ ";
 ui_print " ";
@@ -416,6 +417,7 @@ do_devicecheck;
 do_versioncheck;
 do_levelcheck;
 
+ui_print " ";
 ui_print "- Installing...";
 CORE=$($BB grep -oE 'ak.*core.sh' anykernel.sh);
 test -f tools/$CORE || $BB ln -s $AKHOME/tools/ak*-core.sh $AKHOME/tools/$CORE;
