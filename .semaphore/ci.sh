@@ -91,9 +91,9 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
 export KBUILD_BUILD_USER="Perfect"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="Iapetus 10"
-export ZIP_VERSION="Revision19"
-export BUILD_TYPE="CI"
+export VERSION_TG="Starfall 10"
+export ZIP_VERSION="Revision20"
+export BUILD_TYPE="REL"
 
 # Install depth for Semaphore
 
@@ -106,7 +106,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Iapetus</b>" \
+		"Stage: <b>Starfall</b>" \
 		"From <b>Nito Kernel Android 10 Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
