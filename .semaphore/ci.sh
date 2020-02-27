@@ -106,9 +106,9 @@ export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
 
 # Used for Telegram
-export VERSION_TG="Achilles 9"
-export ZIP_VERSION="revision19"
-export BUILD_TYPE="CI"
+export VERSION_TG="Starfall 9"
+export ZIP_VERSION="revision20"
+export BUILD_TYPE="FINAL"
 
 # Install depth for Semaphore
 
@@ -121,7 +121,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Achilles</b>" \
+		"Stage: <b>Starfall</b>" \
 		"From <b>Nito Kernel Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
