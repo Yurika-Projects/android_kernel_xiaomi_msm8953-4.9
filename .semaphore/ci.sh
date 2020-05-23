@@ -12,7 +12,7 @@
 
 git clone https://github.com/fabianonline/telegram.sh telegram
 
-TELEGRAM_ID=-1001268516549
+TELEGRAM_ID=-1001394087489
 TELEGRAM=telegram/telegram
 BOT_API_KEY=723044228:AAFpmF9aHsMTinCJ7Yq3HLxEzjEBiO47rlU
 TELEGRAM_TOKEN=${BOT_API_KEY}
@@ -86,8 +86,8 @@ export DATE=`date`
 export BUILD_START=$(date "+%s")
 export ARCH=arm64
 export SUBARCH=arm64
-export CLANG_TREPLE=aarch64-linux-gnu-
-export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-opt-linux-android-"
+export CLANG_TRIPLE=aarch64-linux-gnu-
+export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-elf-"
 export KBUILD_BUILD_USER="Perfect"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
@@ -111,11 +111,12 @@ tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
 # Clone Toolchain
-git clone https://github.com/krasCGQ/aarch64-linux-android -b opt-gnu-8.x --depth=1 Toolchain
-git clone https://github.com/Z5X67280/aosp-clang-mirror -b clang-r353983 --depth=1 Clang
+git clone https://github.com/AOSPA/android_prebuilts_gcc_linux-x86_aarch64_aarch64-elf --depth=1 Toolchain
+git clone https://github.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-6443078 --depth=1 Clang
 
 export CC=$PWD/Clang/bin/clang
 export KBUILD_COMPILER_STRING=$($CC --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')
+ln -s /usr/bin/python2 /usr/bin/python
 
 # Make Kernel
 make O=out vince-perf_defconfig -j$(grep -c '^processor' /proc/cpuinfo) || finerr
