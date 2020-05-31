@@ -91,8 +91,8 @@ export CROSS_COMPILE="$PWD/Toolchain/bin/aarch64-elf-"
 export KBUILD_BUILD_USER="Star"
 export KBUILD_BUILD_HOST="TNR Drone"
 export IMG=$PWD/out/arch/arm64/boot/Image.gz-dtb
-export VERSION_TG="Comet 10"
-export ZIP_VERSION="Revision25"
+export VERSION_TG="Antagonism"
+export ZIP_VERSION="Revision26"
 export BUILD_TYPE="REL"
 
 # Install depth for Semaphore
@@ -106,7 +106,7 @@ tg_channelcast "#########################"
 tg_sendstick
 
 tg_channelcast "<b>Nito Kernel $VERSION_TG</b> new build!" \
-		"Stage: <b>Comet</b>" \
+		"Stage: <b>Antagonism</b>" \
 		"From <b>Nito Kernel Android 10 Mainline</b>" \
 		"Under commit <b>$(git log --pretty=format:'%h' -1)</b>"
 
