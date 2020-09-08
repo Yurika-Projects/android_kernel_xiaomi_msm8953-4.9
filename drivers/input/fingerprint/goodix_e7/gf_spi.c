@@ -751,12 +751,10 @@ static int driver_init_partial(struct gf_dev *gf_dev)
 		goto error;
 
 	gf_dev->irq = gf_irq_num(gf_dev);
-	ret = devm_request_threaded_irq(&gf_dev->spi->dev,
-					gf_dev->irq,
-					NULL,
+	ret = devm_request_threaded_irq(&gf_dev->spi->dev, gf_dev->irq, NULL,
 					gf_irq,
-					IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-					"gf",gf_dev);
+					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+					"gf", gf_dev);
 	if (ret){
 		pr_err("Could not request irq %d\n",gpio_to_irq(gf_dev->irq_gpio));
 		goto error;
