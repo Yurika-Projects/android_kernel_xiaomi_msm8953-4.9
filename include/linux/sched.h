@@ -1557,8 +1557,6 @@ struct ravg {
 	 *
 	 * 'busy_buckets' groups historical busy time into different buckets
 	 * used for prediction
-	 *
-	 * 'demand_scaled' represents task's demand scaled to 1024
 	 */
 	u64 mark_start;
 	u32 sum, demand;
@@ -1569,8 +1567,6 @@ struct ravg {
 	u16 active_windows;
 	u32 pred_demand;
 	u8 busy_buckets[NUM_BUSY_BUCKETS];
-	u16 demand_scaled;
-	u16 pred_demand_scaled;
 };
 
 struct sched_entity {
@@ -1754,6 +1750,7 @@ struct task_struct {
 	 */
 	u32 init_load_pct;
 	u64 last_wake_ts;
+	u64 last_switch_out_ts;
 	u64 last_enqueued_ts;
 	struct related_thread_group *grp;
 	struct list_head grp_list;
